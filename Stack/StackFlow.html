@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #stack-container {
+      border: 1px solid #ccc;
+      max-width: 200px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    .stack-element {
+      background-color: #f2f2f2;
+      border: 1px solid #ddd;
+      padding: 8px;
+      margin: 5px;
+    }
+    #top {
+      font-weight: bold;
+      color: #3490dc;
+    }
+    #top-label {
+      font-size: 10px;
+      color: #3490dc;
+    }
+    #position {
+      color: #888;
+      margin-top: 5px;
+    }
+    input, button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<div class="flex justify-center items-center mt-8">
+  <input type="text" id="pushValue" placeholder="Enter value for Push" class="p-2 border rounded">
+  <button onclick="push()" class="px-4 py-2 bg-blue-500 text-white rounded">Push</button>
+  <button onclick="pop()" class="px-4 py-2 bg-red-500 text-white rounded">Pop</button>
+  <button onclick="peek()" class="px-4 py-2 bg-green-500 text-white rounded">Peek</button>
+</div>
+
+<div id="stack-container" class="bg-white rounded shadow-md">
+  <div id="top-indicator" class="mb-2">
+    <div id="top-label">Top</div>
+    <div id="top">Empty</div>
+  </div>
+  <div id="position">Position: </div>
+</div>
+
+<script>
+  let stack = [];
+
+  function updateStackUI() {
+    const stackContainer = document.getElementById("stack-container");
+    const topElement = document.getElementById("top");
+    const topLabel = document.getElementById("top-label");
+    const positionElement = document.getElementById("position");
+    stackContainer.innerHTML = "";
+
+    for (let i = stack.length - 1; i >= 0; i--) {
+      const element = document.createElement("div");
+      element.className = "stack-element";
+      element.textContent = `Value: ${stack[i].value}, Position: ${stack[i].position}`;
+      stackContainer.appendChild(element);
+    }
+
+    const topValue = stack.length > 0 ? stack[stack.length - 1].value : "Empty";
+    topElement.textContent = topValue;
+    topLabel.textContent = "Top";
+    positionElement.textContent = "Position: " + (stack.length > 0 ? stack[stack.length - 1].position : "");
+  }
+
+  function push() {
+    const pushValueInput = document.getElementById("pushValue");
+    const value = pushValueInput.value;
+
+    if (!value) {
+      alert("Please enter a value.");
+      return;
+    }
+
+    const newNode = {
+      value: value,
+      position: stack.length + 1
+    };
+
+    stack.push(newNode);
+    pushValueInput.value = "";
+    updateStackUI();
+  }
+
+  function pop() {
+    if (stack.length === 0) {
+      alert("Stack is empty!");
+      return;
+    }
+
+    stack.pop();
+    updateStackUI();
+  }
+
+  function peek() {
+    if (stack.length === 0) {
+      alert("Stack is empty!");
+      return;
+    }
+
+    const topElement = stack[stack.length - 1];
+    alert(`Top element: Value - ${topElement.value}, Position - ${topElement.position}`);
+  }
+</script>
+
+</body>
+</html>
