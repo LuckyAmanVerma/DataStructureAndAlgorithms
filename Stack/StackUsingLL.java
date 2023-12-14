@@ -20,6 +20,7 @@ class StackUsingLL{
         }
         newNode.next=head;
         head=newNode;
+        System.out.println(head.data);
     }
     public static void peek(){
         if(isEmpty()){
@@ -33,6 +34,14 @@ class StackUsingLL{
         head=head.next;
         System.out.println(data+ " is deleted");
     }
+    public void pushAtTheBottom(int data) {
+            Node initialNode = head;
+            while (initialNode.next != null) {
+                initialNode = initialNode.next;
+            }
+            Node newNode = new Node(data);
+            initialNode.next = newNode;
+        }
     }
     
     public static void main(String args[]){
@@ -40,7 +49,7 @@ class StackUsingLL{
         s.push(4);
          s.push(6);
           s.push(3);
-          s.pop();
-        s.peek();
+        //   s.pop();
+        // s.peek();
     }
 }
