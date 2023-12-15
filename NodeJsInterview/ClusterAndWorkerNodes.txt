@@ -1,0 +1,2 @@
+cluster module as allowing us to run multiple instances of Node in separate processes,
+ while the worker thread module allows us to run multiple instances of Node in the same process
