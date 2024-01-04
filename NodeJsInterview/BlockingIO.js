@@ -7,7 +7,7 @@ Source:- https://alvinlal.netlify.app/blog/single-thread-vs-child-process-vs-wor
 */
 const express = require("express")
 const app = express()
-
+// curl http://localhost:3000/getfibonacci?number=10
 app.get("/getfibonacci", (req, res) => {
   const startTime = new Date()
   const result = fibonacci(parseInt(req.query.number)) //parseInt is for converting string to number

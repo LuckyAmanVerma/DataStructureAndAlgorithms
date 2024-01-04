@@ -10,3 +10,4 @@ function permutations(str,perm,index){
     }
 }
 permutations('ABC','',0);
+

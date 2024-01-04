@@ -1,0 +1,4 @@
+When to use req.params, req.query, and req.body
+Use req.params when you need to access dynamic route parameters.
+Use req.query when you need to access query string parameters.
+Use req.body when you need to access the request body.

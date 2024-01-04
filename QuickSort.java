@@ -34,3 +34,19 @@ class QuickSort{
         }
     }
 }
+
+/**
+ * 
+ [5,7,2,4,1] Pivot 1 , 
+ iteration i=0 , 5 <1 false , no swap , 
+ iteration i=1 , 7 <1 false , no swap , 
+ iteration i=2 , 2 <1 false , no swap , 
+ iteration i=3 , 4 <1 false , no swap , 
+ iteration i=4 , 1 <1 false , no swap ,
+
+ So , for loop doesn't do anything , 
+
+ now at last , we have to swap 
+ increment pointer , x++;
+ swap arr[x] with high; 
+ */
