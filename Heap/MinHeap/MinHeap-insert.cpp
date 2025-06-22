@@ -1,4 +1,3 @@
-
 heap.insert(2);
 class MinHeap { 
 	{
@@ -11,8 +10,6 @@ class MinHeap {
 			size++;    // size=1
 			return;
 		}
-		heap[size-1]=val;    // 
-		size++;
 		......
 		// now i have to bubble up 
 		
@@ -34,14 +31,15 @@ class MinHeap {
 			size++;    
 			return;
 		}
-		heap[size]=val;    //  heap=[2,1]
+		heap[size]=val;
+		int current = size;    //  heap=[2,1]
 		size++;           //size=2
 		......
 		// Now we have to check , If new value is in its correct position
-		while (size>1){
-			int parent = (size-1)/2;   // 1
-			if(heap[parent]>heap[size-1]){   // 2 is greater than 1 
-				swap(heap[parent],heap[size-1]);   //after swap [1,2]
+		while (current>1){
+			int parent = (current-1)/2;   // 1
+			if(heap[parent]>heap[current-1]){   // 2 is greater than 1 
+				swap(heap[parent],heap[current-1]);   //after swap [1,2]
 			}  
 			// heap =[1,2] size=2
 			return;
@@ -81,3 +79,32 @@ class MinHeap {
 		
 	}
 }
+
+// Updated MinHeap class using dummy value at index 0 for easier indexing
+class MinHeapDummy {
+public:
+    int size;
+    vector<int> heap; // heap[0] is dummy, real heap starts from index 1
+
+    MinHeapDummy() : size(0) {
+        heap.push_back(-1); // dummy value at index 0
+    }
+
+    void insert(int val) {
+        heap.push_back(val); // insert at the end
+        size++;
+        int current = size;
+        // Bubble up
+        while(current > 1 && heap[current/2] > heap[current]) {
+            swap(heap[current/2], heap[current]);
+            current = current/2;
+        }
+    }
+
+    void printHeap() {
+        for(int i = 1; i <= size; i++) {
+            cout << heap[i] << " ";
+        }
+        cout << endl;
+    }
+};
