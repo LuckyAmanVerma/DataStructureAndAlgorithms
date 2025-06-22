@@ -14,13 +14,16 @@ public:
             if(minStack.empty()){
                 minStack.push_back(val);
             }
-            else if(val < minStack[minStack.size()-1]){
+            else if(val <= minStack[minStack.size()-1]){
                 minStack.push_back(val);
             }
     }
     
     void pop() {
-        stack.erase(stack.begin() + topVal);
+        if(!minStack.empty() && minStack[minStack.size()-1] == stack[topVal]) {
+            minStack.pop_back();
+        }
+        stack.pop_back(); // Remove the top element
         topVal--;
     }
     
@@ -32,16 +35,10 @@ public:
     }
     
     int getMin() {
-        if(topVal < 0){
-            throw std::out_of_range("Stack is empty");
+        if(minStack.empty()) {
+            throw std::out_of_range("Min stack is empty");
         }
-        int minValue = stack[0];
-        for (int i = 1; i <= topVal; i++) {
-            if (stack[i] < minValue) {
-                minValue = stack[i];
-            }
-        }
-        return minValue;
+        return minStack[minStack.size()-1];
     }
 };
 
