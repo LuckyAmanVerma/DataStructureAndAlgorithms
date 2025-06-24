@@ -84,4 +84,44 @@ public:
         current->next->prev = newNode;
         current->next = newNode;    
     }
+
+    void get(int index) {
+       if(!head || index < 0) {
+           return; // If list is empty or index is negative, do nothing
+       }
+         Node *current = head;
+         for (int i = 0; i < index; i++) {
+            current = current->next;
+            if (current == nullptr) {
+                return; // If index is out of bounds, do nothing
+            }
+         }
+            return current->data; // Return the data at the specified index
+    }
+
+    void deleteAtIndex(int index){
+        if (!head || index < 0) {
+            return; // If list is empty or index is negative, do nothing
+        }
+        Node *current = head;
+
+        if(current->prev==nullptr && current->next==nullptr && index == 0) { 
+            head=nullptr;
+            tail=nullptr;
+            delete current; // If the node to delete is the only node, clear the list
+            return;
+        }
+
+        for (int i = 0; i < index; i++) {
+            current = current->next;
+            if (current == nullptr) {
+                return; // If index is out of bounds, do nothing
+            }
+        } 
+       current->prev=current->prev->next;
+        if (current->next != nullptr) {
+            current->next->prev = current->prev; // Adjust the next node's previous pointer
+        }
+
+    }
 };
