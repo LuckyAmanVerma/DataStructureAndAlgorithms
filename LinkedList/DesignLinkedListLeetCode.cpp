@@ -1,5 +1,5 @@
 /*
-MyLinkedList myLinkedList = new MyLinkedList();
+DoublyLinkedList myLinkedList = new MyLinkedList();
 myLinkedList.addAtHead(1);
 myLinkedList.addAtTail(3);
 myLinkedList.addAtIndex(1, 2);    // linked list becomes 1->2->3
@@ -118,10 +118,12 @@ public:
                 return; // If index is out of bounds, do nothing
             }
         } 
-       current->prev=current->prev->next;
+        current->prev->next = current->next; // Adjust the previous node's next pointer
         if (current->next != nullptr) {
             current->next->prev = current->prev; // Adjust the next node's previous pointer
         }
+
+        delete current; // free memory
 
     }
 };
