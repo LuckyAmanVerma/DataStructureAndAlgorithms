@@ -1,3 +1,8 @@
+/**
+    * Factorial of a number using recursion
+    * time complexity: O(n)
+    * space complexity: O(n)
+ */
 function fact(n){
     if(n==1){
         return 1;
