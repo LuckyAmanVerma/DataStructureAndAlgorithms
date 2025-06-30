@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Array Mastery Ladder</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f9f9f9; color: #222; margin: 0; padding: 2rem; }
+    h1 { color: #e67e22; }
+    h2 { color: #2980b9; margin-top: 2em; }
+    h3 { color: #16a085; }
+    .section { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; margin-bottom: 2em; padding: 1.5em; }
+    ul, ol { margin: 0.5em 0 1em 2em; }
+    li { margin-bottom: 0.3em; }
+    .problems { color: #c0392b; }
+    .tips { color: #8e44ad; }
+    .practice { color: #27ae60; }
+    .divider { border-top: 2px dashed #bbb; margin: 2em 0; }
+    .howto { background: #f6e58d; border-left: 5px solid #f9ca24; padding: 1em; margin: 2em 0; }
+    .footer { color: #888; font-size: 1.1em; margin-top: 2em; }
+  </style>
+</head>
+<body>
+  <h1>🧗 Array Mastery Ladder: 10-Step Strategy Plan</h1>
+  <p><b>Each Step Includes:</b></p>
+  <ul>
+    <li>Concept</li>
+    <li>Real Interview-Style Problems</li>
+    <li>Strategy Tips</li>
+    <li>Practice Flow</li>
+  </ul>
+  <div class="divider"></div>
+
+  <div class="section">
+    <h2>1. Prefix Sum / Sliding Window</h2>
+    <b>Concept:</b> Optimize subarray calculations (sum, average, etc.)<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Subarray Sum Equals K</li>
+      <li>Maximum Average Subarray</li>
+      <li>Minimum Size Subarray Sum</li>
+      <li>Count Number of Nice Subarrays</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Sliding window: use when subarray size is fixed</li>
+      <li>Prefix sum: for variable size & constant time queries</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Dry-run with prefix sum arrays
+  </div>
+
+  <div class="section">
+    <h2>2. Two Pointer Technique</h2>
+    <b>Concept:</b> Traverse from ends or maintain two moving indices<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>2Sum II (Sorted Input)</li>
+      <li>Container With Most Water</li>
+      <li>3Sum / 4Sum</li>
+      <li>Move Zeroes / Remove Duplicates</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Use on sorted or "movable logic" arrays</li>
+      <li>Can reduce O(n²) to O(n)</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Visualize with two fingers moving
+  </div>
+
+  <div class="section">
+    <h2>3. Binary Search on Array or Answer</h2>
+    <b>Concept:</b> Not just on values, but on search space<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Median of Two Sorted Arrays</li>
+      <li>Search Insert Position</li>
+      <li>Koko Eating Bananas</li>
+      <li>Aggressive Cows (Binary Search on Answer)</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Identify monotonicity to apply binary search</li>
+      <li>Focus on upper/lower bound tricks</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Build template: <code>low + high</code>, <code>mid</code>, <code>check(mid)</code>
+  </div>
+
+  <div class="section">
+    <h2>4. Greedy Logic in Arrays</h2>
+    <b>Concept:</b> Make local decisions to reach global optima<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Jump Game / Jump Game II</li>
+      <li>Can Place Flowers</li>
+      <li>Gas Station</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Track reachable indices or conditions</li>
+      <li>Dry-run each step and prove local → global</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Compare Greedy vs DP approaches
+  </div>
+
+  <div class="section">
+    <h2>5. Hashing & Frequency Maps</h2>
+    <b>Concept:</b> Track counts, presence, or fast lookup<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Two Sum</li>
+      <li>Longest Consecutive Sequence</li>
+      <li>Majority Element</li>
+      <li>Group Anagrams</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Use <code>unordered_map</code>, <code>set</code> smartly</li>
+      <li>Think in terms of counts, not just values</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Edge cases: duplicates, negatives, etc.
+  </div>
+
+  <div class="section">
+    <h2>6. Kadane’s Algorithm & Subarray Maximums</h2>
+    <b>Concept:</b> Find contiguous maximum subarray or max sum<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Maximum Subarray</li>
+      <li>Maximum Product Subarray</li>
+      <li>Circular Maximum Subarray</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>For maximum: use <code>max(curr, curr + num)</code></li>
+      <li>For circular: total sum - min subarray</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Dry-run to build pattern memory
+  </div>
+
+  <div class="section">
+    <h2>7. Monotonic Stack</h2>
+    <b>Concept:</b> For future-dependent questions — next greater/smaller<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Daily Temperatures</li>
+      <li>Next Greater Element II</li>
+      <li>Largest Rectangle in Histogram</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Stack maintains monotonicity (increasing/decreasing)</li>
+      <li>Often combined with reverse iteration</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Simulate stack on paper
+  </div>
+
+  <div class="section">
+    <h2>8. Divide & Conquer in Arrays</h2>
+    <b>Concept:</b> Break arrays into subarrays + combine results<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Merge Sort (base template)</li>
+      <li>Count Inversions</li>
+      <li>Maximum of Minimum in Every Window Size</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Use recursion or tree logic (segment trees)</li>
+      <li>Use merge steps to track cross-subarray info</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Track indices while merging
+  </div>
+
+  <div class="section">
+    <h2>9. 2D Arrays & Matrix Tricks</h2>
+    <b>Concept:</b> Think flattened, spiral, or matrix transformations<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Spiral Matrix</li>
+      <li>Search a 2D Matrix</li>
+      <li>Set Matrix Zeroes</li>
+      <li>Rotate Matrix</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>Treat 2D indices as i/j, think in layers/levels</li>
+      <li>Flatten for binary search</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Practice rotations visually
+  </div>
+
+  <div class="section">
+    <h2>10. Bit Manipulation in Arrays</h2>
+    <b>Concept:</b> Use XOR or bit counting for unique elements<br>
+    <span class="problems"><b>Problems:</b></span>
+    <ul>
+      <li>Single Number / Single Number II</li>
+      <li>Missing Number</li>
+      <li>Sum of Two Integers</li>
+      <li>Bitwise AND of Range</li>
+    </ul>
+    <span class="tips"><b>Tips:</b></span>
+    <ul>
+      <li>XOR of same numbers = 0 (cancels out)</li>
+      <li>Use 32-bit loops to count bit frequency</li>
+    </ul>
+    <span class="practice"><b>Practice:</b></span> Convert to binary & dry-run bit masks
+  </div>
+
+  <div class="howto">
+    <h2>📚 How To Climb This Ladder</h2>
+    <ol>
+      <li>Pick one level and understand the core idea</li>
+      <li>Solve 2 easy + 2 medium + 1 hard from that category</li>
+      <li>Always dry-run before submitting</li>
+      <li>Build pattern notebooks or code snippets</li>
+      <li>Revise alternate approaches (sliding vs prefix, brute vs greedy)</li>
+    </ol>
+  </div>
+
+  <div class="footer">
+    Want this as a Trello checklist, custom problem set, or mindmap? Just ask! 😎📈
+  </div>
+</body>
+</html>
