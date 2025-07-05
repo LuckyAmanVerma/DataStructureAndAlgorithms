@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>When to Use HashMap with Prefix Sum vs Sliding Window</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; }
+        h1, h2, h3 { color: #2c3e50; }
+        code, pre { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+        table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        th, td { border: 1px solid #bbb; padding: 8px; text-align: left; }
+        th { background: #eaeaea; }
+        .section { margin-bottom: 2em; }
+        .rule { background: #e3f2fd; padding: 1em; border-left: 4px solid #2196f3; margin-bottom: 1em; }
+    </style>
+</head>
+<body>
+    <h1>When to Use HashMap with Prefix Sum vs Sliding Window</h1>
+
+    <div class="section rule">
+        <strong>Rule of Thumb:</strong>  
+        When you see a contiguous-subarray sum problem, use this flow to decide between <b>hash map + prefix sum</b> and <b>sliding window</b>.
+    </div>
+
+    <h2>1. Ask: “Am I counting the <b>number</b> of subarrays?”</h2>
+    <ul>
+        <li><b>Yes</b> &rarr; almost always <b>Prefix-Sum + HashMap</b>
+            <ul>
+                <li>Sum exactly = K (“Two Sum” style)</li>
+                <li>Sum divisible by K</li>
+                <li>Count of subarrays with sum ≤ K, = K, ≥ K (especially when negatives allowed)</li>
+                <li><b>Key insight:</b> you need to remember <b>how many times</b> each prefix‐sum (or remainder) has appeared.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>2. Else ask: “Am I finding a <b>best/optimal window</b> (max-sum, min-length, max-average)?”</h2>
+    <ul>
+        <li><b>Yes</b> &rarr; usually <b>Sliding Window / Two-Pointers</b>
+            <ul>
+                <li>Fixed window size = K &rarr; update by <b>add new</b>, <b>drop old</b></li>
+                <li>Min-length subarray with sum ≥ K (positives only) &rarr; grow until ≥K, then shrink</li>
+                <li>Max-average of size K &rarr; same as max-sum then divide by K</li>
+                <li>Longest substring with condition (unique chars, at most K distinct) &rarr; sliding window on strings</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>3. Check your constraints</h2>
+    <ul>
+        <li><b>All positives?</b> Sliding window works in <b>O(n)</b> (sum monotonic)</li>
+        <li><b>Negatives allowed?</b> Sliding window breaks (sum can go down), so go prefix-sum + map (or BST) in <b>O(n log n)</b> if you need order.</li>
+        <li><b>Multiple arbitrary sum queries offline?</b> Build a prefix array once and answer each in O(1).</li>
+    </ul>
+
+    <h3>Quick Decision Table</h3>
+    <table>
+        <tr>
+            <th>Problem Type</th>
+            <th>Want to <b>count</b> subarrays?</th>
+            <th>Want to <b>optimize</b> (min/max) one subarray?</th>
+        </tr>
+        <tr>
+            <td>Sum == K / Sum % K == 0</td>
+            <td style="text-align:center;">✅ HashMap + Prefix-Sum</td>
+            <td style="text-align:center;">❌</td>
+        </tr>
+        <tr>
+            <td>Count of subarrays with sum in a range</td>
+            <td style="text-align:center;">✅ HashMap + Prefix-Sum</td>
+            <td style="text-align:center;">❌</td>
+        </tr>
+        <tr>
+            <td>Fixed window size max-sum / avg</td>
+            <td style="text-align:center;">❌</td>
+            <td style="text-align:center;">✅ Sliding Window</td>
+        </tr>
+        <tr>
+            <td>Min-length subarray sum ≥ K (positives)</td>
+            <td style="text-align:center;">❌</td>
+            <td style="text-align:center;">✅ Sliding Window</td>
+        </tr>
+        <tr>
+            <td>Longest/shortest substring constraints</td>
+            <td style="text-align:center;">❌</td>
+            <td style="text-align:center;">✅ Sliding Window</td>
+        </tr>
+    </table>
+
+    <div class="section rule">
+        <b>Bottom-line:</b><br>
+        Whenever you see “<b>how many</b>” or arbitrary sum conditions (especially with negatives), think “hash map of prefix sums (or remainders).”<br>
+        Whenever you see “<b>find the best</b>” contiguous block under monotonic behavior, think “sliding window.”
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MAANG Interview Array Topics: Prefix Sum & Sliding Window</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f9f9f9; color: #222; margin: 0; padding: 2rem; }
+    h1 { color: #e67e22; }
+    h2 { color: #2980b9; margin-top: 2em; }
+    .section { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; margin-bottom: 2em; padding: 1.5em; }
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    th, td { border: 1px solid #bbb; padding: 0.5em 1em; text-align: left; }
+    th { background: #f6e58d; }
+    tr:nth-child(even) { background: #f9f9f9; }
+    .tips { color: #8e44ad; margin-top: 2em; }
+    .footer { color: #888; font-size: 1.1em; margin-top: 2em; }
+    .divider { border-top: 2px dashed #bbb; margin: 2em 0; }
+  </style>
+</head>
+<body>
+  <h1>MAANG Interview Array Topics: Prefix Sum & Sliding Window</h1>
+  <div class="section">
+    <p>Yahan ek curated list hai interview-worthy array problems, <b>easy → hard</b> order mein, har ek ke saath use-case, core technique, aur expected time complexity.</p>
+  </div>
+  <div class="divider"></div>
+
+  <div class="section">
+    <h2>📗 Easy</h2>
+    <table>
+      <tr><th>Problem</th><th>Core Task</th><th>Technique</th><th>Time Complexity</th></tr>
+      <tr><td>1. Maximum Sum of Subarray of Size K</td><td>Given fixed window size K, find max window sum</td><td>Sliding Window</td><td>O(n)</td></tr>
+      <tr><td>2. Count Subarrays with Sum Divisible by K</td><td>Count all subarrays whose sum % K == 0</td><td>Prefix Sum + HashMap</td><td>O(n)</td></tr>
+      <tr><td>3. Continuous Subarray Sum (LeetCode 523)</td><td>Check if any subarray sum is a multiple of K</td><td>Prefix Sum + HashMap</td><td>O(n)</td></tr>
+      <tr><td>4. Count Number of Nice Subarrays (LeetCode 1248)</td><td>Count subarrays with exactly k odd numbers</td><td>Prefix Sum (parity) + HashMap</td><td>O(n)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>📙 Medium</h2>
+    <table>
+      <tr><th>Problem</th><th>Core Task</th><th>Technique</th><th>Time Complexity</th></tr>
+      <tr><td>5. Longest Substring Without Repeating Characters (LeetCode 3)</td><td>Max-length window with all unique characters</td><td>Sliding Window + Two-pointer</td><td>O(n)</td></tr>
+      <tr><td>6. Minimum Window Substring (LeetCode 76)</td><td>Smallest window containing all chars of pattern</td><td>Sliding Window + HashMap</td><td>O(n)</td></tr>
+      <tr><td>7. Permutation in String (LeetCode 567)</td><td>Check if s2 contains a permutation of s1</td><td>Sliding Window + Frequency Map</td><td>O(n)</td></tr>
+      <tr><td>8. Number of Subarrays with Sum at Most K</td><td>Count subarrays whose sum ≤ K</td><td>Prefix Sum + Two-pointers</td><td>O(n)</td></tr>
+      <tr><td>9. Subarrays with K Different Integers (LeetCode 992)</td><td>Count subarrays with exactly k distinct integers</td><td>Sliding Window (two passes)</td><td>O(n)</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>📕 Hard</h2>
+    <table>
+      <tr><th>Problem</th><th>Core Task</th><th>Technique</th><th>Time Complexity</th></tr>
+      <tr><td>10. Max Subarray Sum No More Than K (LeetCode 363)</td><td>Max subarray sum ≤ K</td><td>Prefix Sum + Balanced BST</td><td>O(n log n)</td></tr>
+      <tr><td>11. Count of Subarrays with Median K (LeetCode 2488)</td><td>Number of subarrays whose median equals K</td><td>Prefix Sum (transformed array)</td><td>O(n)</td></tr>
+      <tr><td>12. Shortest Subarray with Sum at Least K (LeetCode 862)</td><td>Min-length subarray with sum ≥ K (negatives allowed)</td><td>Prefix Sum + Deque (mono-queue)</td><td>O(n)</td></tr>
+      <tr><td>13. Count Subarrays with Sum Greater Than K</td><td>Count subarrays sum > K</td><td>Prefix Sum + BIT / Segment Tree</td><td>O(n log n)</td></tr>
+    </table>
+  </div>
+
+  <div class="section tips">
+    <h2>🔍 Tips for Practice</h2>
+    <ul>
+      <li><b>Start Easy:</b> Master fixed-window and basic prefix-map problems first.</li>
+      <li><b>Shift to Medium:</b> Dive into string sliding-window variants and two-pointer extensions.</li>
+      <li><b>Tackle Hard:</b> Work on constraints that break monotonicity—introduce BSTs or mono-queues.</li>
+    </ul>
+    <p>Kal se is ladder pe ek-ek problem solve karna shuru karo, dry-run banao, edge cases list karo, aur code walkthrough commit to memory karo. <b>Best of luck, Aman bhai!</b></p>
+  </div>
+</body>
+</html>

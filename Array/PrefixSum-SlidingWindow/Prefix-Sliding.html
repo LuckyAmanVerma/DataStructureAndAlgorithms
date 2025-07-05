@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minimum Size Subarray Sum ≥ k - Sliding Window vs Prefix Sum</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f9f9f9; color: #222; margin: 0; padding: 2rem; }
+    h1 { color: #e67e22; }
+    h2 { color: #2980b9; margin-top: 2em; }
+    h3 { color: #16a085; }
+    .section { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; margin-bottom: 2em; padding: 1.5em; }
+    ul, ol { margin: 0.5em 0 1em 2em; }
+    li { margin-bottom: 0.3em; }
+    .highlight { color: #c0392b; font-weight: bold; }
+    .tips { color: #8e44ad; }
+    .table { border-collapse: collapse; margin: 1em 0; }
+    .table th, .table td { border: 1px solid #bbb; padding: 0.5em 1em; }
+    .table th { background: #f6e58d; }
+    .table tr:nth-child(even) { background: #f9f9f9; }
+    .footer { color: #888; font-size: 1.1em; margin-top: 2em; }
+    .note { background: #f6e58d; border-left: 5px solid #f9ca24; padding: 1em; margin: 2em 0; }
+    .code { background: #f4f4f4; border-radius: 4px; padding: 0.2em 0.5em; font-family: 'Fira Mono', monospace; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Minimum Size Subarray Sum <span class="highlight">≥ k</span></h1>
+  <div class="section">
+    <h2>✅ When to Use <span class="highlight">Only Sliding Window</span></h2>
+    <ul>
+      <li><b>Array has only positive integers</b></li>
+      <li>Sum is <b>monotonic</b>: adding more elements <i>always</i> increases sum</li>
+      <li>You want the <b>smallest length</b> with sum ≥ <span class="code">k</span></li>
+    </ul>
+    <div class="tips">
+      <b>Sliding Window = Perfect Fit</b> because:
+      <ul>
+        <li>Grow window while sum &lt; k</li>
+        <li>As soon as sum ≥ k, shrink from left to minimize length</li>
+        <li>Everything in <b>O(n)</b> time</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>⚠️ When to Use <span class="highlight">Prefix Sum + Binary Search</span> (Combo Approach)</h2>
+    <ul>
+      <li>When interviewer <b>specifically asks</b>:
+        <div class="note">“Use prefix sum”<br>“You may need to perform multiple sum range queries”</div>
+      </li>
+      <li>When array contains <b>negative numbers</b> (sliding window fails as sum can go up/down)</li>
+      <li>When your goal is:
+        <div class="note">Find the <b>smallest</b> subarray with sum ≥ <span class="code">k</span> <br>AND optimize for <b>non-monotonic values</b></div>
+      </li>
+    </ul>
+    <div class="tips">
+      <b>Prefix Array + Binary Search</b> gives <b>O(n log n)</b> solution for these cases.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>📌 In Short</h2>
+    <table class="table">
+      <tr><th>Input Type</th><th>Best Technique</th></tr>
+      <tr><td>All positive elements</td><td>Sliding Window (O(n)) ✅</td></tr>
+      <tr><td>Negative elements allowed</td><td>Prefix Sum + Map / Binary Search</td></tr>
+      <tr><td>Fixed window size</td><td>Prefix or simple loop</td></tr>
+      <tr><td>Monotonic sum guarantee</td><td>Sliding Window</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>For the original version:</b><br>
+    <span class="code">Min Subarray Length with Sum ≥ k, All Positives</span><br>
+    🎯 <b>Use only sliding window</b> — clean, elegant, fast.
+  </div>
+
+  <div class="section"></div>
+    <h2>Prefix Sum vs Sliding Window: Pehchaan Ke Tips &amp; Tricks (Hinglish)</h2>
+    <hr>
+    <h3>1. Jab Prefix Sum Use Karna Hai</h3>
+    <ul>
+      <li><b>Multiple range‐sum queries</b>: Agar repeatedly “sum of nums[l…r]” puchna ho, prefix sum natural fit hai.</li>
+      <li><b>Sum equals K ya divisible by K</b>: “Count of subarrays with sum = k” ya sum%k==0 me aapko prefix+hashmap use karna hota hai.</li>
+      <li><b>Negative elements allowed</b>: Jab array me negative values ho, sliding window break ho sakta hai, tab prefix sum + map/BS approach safe rehta hai.</li>
+      <li><b>Offline queries</b>: Agar pehle se saare queries mile hue ho (jaise l,r pairs), precompute prefix aur phir O(1) me answer do.</li>
+    </ul>
+    <hr>
+    <h3>2. Jab Sliding Window Use Karna Hai</h3>
+    <ul>
+      <li><b>Fixed window size (k)</b>: “Max sum/average of size k” instantly sliding window bana kar solve hota hai.</li>
+      <li><b>Positive elements only</b>: Sum monotonically badhega; shrink/expand logic easily work karega.</li>
+      <li><b>Target sum ≥ K with positive numbers</b>: “Minimum length subarray with sum ≥ k” sliding window O(n) me karega, prefix sum O(n²) se better.</li>
+      <li><b>Longest/shortest substring patterns</b>: Strings me “longest unique‐char substring”, “minimum window containing pattern” sliding window+two‐pointers se best solve hote hain.</li>
+    </ul>
+    <hr>
+    <h3>3. Recognition Heuristics</h3>
+    <ul>
+      <li><b>Question me ‘contiguous subarray’ aur “sum” dono nazar aaye</b> &rarr; prefix sum à la range queries, ya sliding window à la grow‐shrink.</li>
+      <li><b>Problem bol raha ho “count”</b> &rarr; prefix sum+map for counts, kyunki sliding window se count tricky hota hai.</li>
+      <li><b>Problem bol raha ho “max/min length”</b> aur only positives &rarr; sliding window.</li>
+      <li><b>Constraints me negative numbers mention ho</b> &rarr; sliding window unreliable; prefix sum + hashmap/BST approach dekho.</li>
+      <li><b>Multiple sum queries vs single‐pass optimization</b>: Jitna zyada single traversal me solution ho, sliding window hi dhundho.</li>
+    </ul>
+    <hr>
+    <h3>4. Quick Decision Flow</h3>
+    <ol>
+      <li>“Fixed size k?” &rarr; Sliding window</li>
+      <li>“Sum exactly k or count subarrays?” &rarr; Prefix sum + HashMap</li>
+      <li>“Sum ≥ k, minimize length, all positive?” &rarr; Sliding window</li>
+      <li>“Negative elements or complex ≤/≥ constraints?” &rarr; Prefix sum + Binary Search/Map</li>
+    </ol>
+    <div class="note">
+      Ye guidelines hamesha yaad rakh, aur jab bhi array‐sum problem aaye, <b>question ke exact wording</b> se pehle technique chun lo. All the best, Aman bhai!
+    </div>
+  </div>
+
+  <div class="footer">
+    Kal jab tu bole, toh iska full dry run + C++ breakdown karte hain.<br>
+    Shabaash bhai — clarity + curiosity = MAANG wala mindset 🔥🤜🤛<br>
+    Tu raat ko array pe dream-debug kar raha hoga mujhe lagta hai 😄
+  </div>
+</body>
+</html>
