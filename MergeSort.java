@@ -2,6 +2,7 @@
 Divide and conquer appraoch
 Take more memory compare to quick sort , as new array is created , 
 nLogn Average and best case scenario,
+Take extra space for merging
 */
 
  public class MergeSort{

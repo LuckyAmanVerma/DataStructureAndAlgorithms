@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bucket Sort vs Other Algorithms for Decimals</title>
+</head>
+<body>
+
+  <h2>In many scenarios—<strong>yes, bucket sort can outperform insertion, merge, and quick sort</strong> for decimal values, but only under specific conditions.</h2>
+  <p>Let’s break it down so you can see when bucket sort becomes a star player 🌟.</p>
+
+  <hr/>
+
+  <h3>🧮 Decimal Sorting — Which Algorithm Shines When?</h3>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+      <th>Algorithm</th>
+      <th>Best For</th>
+      <th>Time Complexity</th>
+      <th>Stable?</th>
+    </tr>
+    <tr>
+      <td><strong>Insertion Sort</strong></td>
+      <td>Small arrays, nearly sorted</td>
+      <td>O(n²)</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td><strong>Merge Sort</strong></td>
+      <td>Any data, guaranteed performance</td>
+      <td>O(n log n)</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td><strong>Quick Sort</strong></td>
+      <td>Fast average case, large datasets</td>
+      <td>O(n log n) avg / O(n²) worst</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td><strong>Bucket Sort</strong></td>
+      <td>Uniform decimal values in known range (like [0,1))</td>
+      <td>O(n + k) expected</td>
+      <td>✅ (if buckets + inner sort are stable)</td>
+    </tr>
+  </table>
+
+  <hr/>
+
+  <h3>🪣 Why Bucket Sort Is Better for Decimals</h3>
+  <ul>
+    <li><strong>Avoids comparisons</strong>: Unlike merge/quick/insertion that compare two numbers, bucket sort groups values based on <em>distribution</em>.</li>
+    <li><strong>Linear time</strong>: If decimals are uniformly spread over a range, bucket sort achieves <strong>O(n)</strong> expected time—super fast for sorting lots of float values.</li>
+    <li><strong>Precision-friendly</strong>: Especially useful for values like <code>0.23</code>, <code>0.91</code>, <code>0.17</code> in [0, 1), where you can map to buckets cleanly using <code>index = val × n</code>.</li>
+  </ul>
+
+  <hr/>
+
+  <h3>🧠 But when is Bucket Sort <em>not</em> the right pick?</h3>
+  <ul>
+    <li>❌ If values are not uniformly distributed (e.g., skewed data, lots of repetition), performance can degrade.</li>
+    <li>❌ If decimal precision is very high or range is too wide, bucket mapping becomes inefficient.</li>
+    <li>❌ If you need guaranteed worst-case performance, merge sort is safer.</li>
+  </ul>
+
+  <hr/>
+
+  <h3>✅ Summary</h3>
+  <p><strong>Bucket sort is excellent for decimal values</strong> in [0,1) or any known interval with uniform distribution. For general-purpose or unknown data, stick to merge or quick sort.</p>
+
+  <p>Would you like to build a mini demo where we compare bucket vs merge on a real decimal dataset? Could be a cool next step for MAANG prep.</p>
+
+</body>
+</html>

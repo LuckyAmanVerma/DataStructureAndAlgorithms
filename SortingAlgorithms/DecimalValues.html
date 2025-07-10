@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sorting Decimal Numbers</title>
+</head>
+<body>
+
+  <h1>Sorting Decimal Numbers</h1>
+  <p>
+    When you need to sort decimal values (either fixed-precision numbers or real numbers in a known range), you can often beat O(n log n) comparison sorts by using digit- or bucket-based methods.
+  </p>
+
+  <hr/>
+
+  <h2>1. Radix Sort (for fixed-precision decimals)</h2>
+  <ul>
+    <li>How it works
+      <ul>
+        <li>Processes numbers digit by digit (least significant to most significant)</li>
+        <li>At each pass, distributes elements into 10 “buckets” by their current digit and then collects them back</li>
+      </ul>
+    </li>
+    <li>Time complexity
+      <ul>
+        <li>O(d · (n + b)) where d = number of decimal digits, b = base (10)</li>
+        <li>For fixed d, this is effectively O(n)</li>
+      </ul>
+    </li>
+    <li>When to use
+      <ul>
+        <li>Keys have a known, limited number of decimal places</li>
+        <li>You can afford O(n + b) extra space for buckets</li>
+        <li>You need a stable, linear-time sort without comparisons</li>
+      </ul>
+    </li>
+  </ul>
+
+  <hr/>
+
+  <h2>2. Bucket Sort (for real decimals in [0, 1) or any known range)</h2>
+  <ul>
+    <li>How it works
+      <ul>
+        <li>Divides the range into k equal-width buckets</li>
+        <li>Distributes each element into its bucket based on its value</li>
+        <li>Sorts each bucket (often with insertion sort) and concatenates</li>
+      </ul>
+    </li>
+    <li>Time complexity
+      <ul>
+        <li>Best/Average: O(n + k) → with k ≈ n and uniform data, average is O(n)</li>
+        <li>Worst: O(n²) if all values land in one bucket</li>
+      </ul>
+    </li>
+    <li>When to use
+      <ul>
+        <li>Values are uniformly distributed over a known interval (e.g., [0, 1))</li>
+        <li>You want expected linear time on floats or real decimals</li>
+        <li>You can choose k proportional to n</li>
+      </ul>
+    </li>
+  </ul>
+
+  <hr/>
+
+  <h2>Why Not Comparisons?</h2>
+  <ul>
+    <li>Comparison sorts (Quick, Merge, Heap) are bound by Ω(n log n)</li>
+    <li>Digit- and bucket-based methods exploit the numeric structure to reach O(n) under the right conditions</li>
+  </ul>
+
+  <hr/>
+
+  <h2>References</h2>
+  <p>
+    “Radix sort is particularly effective for sorting integer data…”, Alex K. Radix Sort overview.
+  </p>
+
+</body>
+</html>

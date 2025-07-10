@@ -1,0 +1,140 @@
+<html>
+<head>
+  <title>Sorting Algorithms Info</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; margin: 2em 0; }
+    th, td { border: 1px solid #bbb; padding: 10px; text-align: left; }
+    th { background: #eaeaea; }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; }
+    h2 { color: #2c3e50; }
+  </style>
+</head>
+<body>
+  <h2>Sorting Algorithms: Space and Time Complexity</h2>
+  <table>
+    <tr>
+      <th>Algorithm</th>
+      <th>Type</th>
+      <th>Space Complexity</th>
+      <th>Time Complexity (Average)</th>
+      <th>Time Complexity (Worst)</th>
+    </tr>
+    <tr>
+      <td>Insertion Sort</td>
+      <td>In Place</td>
+      <td>O(1)</td>
+      <td>O(n<sup>2</sup>)</td>
+      <td>O(n<sup>2</sup>)</td>
+    </tr>
+    <tr>
+      <td>Merge Sort</td>
+      <td>Divide and Conquer</td>
+      <td>O(n)</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+    </tr>
+    <tr>
+      <td>Quick Sort</td>
+      <td>Divide and Conquer</td>
+      <td>O(log n)</td>
+      <td>O(n log n)</td>
+      <td>O(n<sup>2</sup>)</td>
+    </tr>
+    <tr>
+      <td>Heap Sort</td>
+      <td>In Place</td>
+      <td>O(1)</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+    </tr>
+    <tr>
+      <td>Counting Sort</td>
+      <td>Non-Comparison Based</td>
+      <td>O(n)</td>
+      <td>O(n + k)</td>
+      <td>O(n + k)</td>
+    </tr>
+    <tr>
+      <td>Radix Sort</td>
+      <td>Non-Comparison Based</td>
+      <td>O(n)</td>
+      <td>O(nk)</td>
+      <td>O(nk)</td>
+    </tr>
+    <!-- add time sort inforation also -->
+    <tr>
+      <td>Tim Sort</td>
+      <td>Hybrid (Merge + Insertion)</td>
+      <td>O(n)</td>
+      <td>O(n log n)</td>
+      <td>O(n log n)</td>
+  </table>
+
+
+<h2>Sorting Algorithm Usage Guide</h2>
+
+<details>
+  <summary><b>Insertion Sort: When to Use & When Not To</b></summary>
+  <ul>
+    <li><b>Use Insertion Sort When:</b>
+      <ul>
+        <li>Array is small (n ≤ 30, or up to 50–100 if nearly sorted)</li>
+        <li>Array is already or almost sorted (best case O(n))</li>
+        <li>Stable sort is needed and memory is limited (O(1) space)</li>
+      </ul>
+    </li>
+    <li><b>Avoid Insertion Sort When:</b>
+      <ul>
+        <li>Array is large (n > 100)</li>
+        <li>Data is random/unordered (worst case O(n²))</li>
+        <li>High performance is needed for big datasets (prefer Merge/Quick Sort)</li>
+      </ul>
+    </li>
+  </ul>
+</details>
+
+<details>
+  <summary><b>Quick Sort: When to Use & When Not To</b></summary>
+  <ul>
+    <li><b>Use Quick Sort When:</b>
+      <ul>
+        <li>You want fast in-memory sorting (excellent cache performance)</li>
+        <li>Average-case performance is acceptable (O(n log n))</li>
+        <li>Memory overhead needs to be low (in-place sorting)</li>
+        <li>You can implement good pivot strategies (e.g., randomized, median-of-three)</li>
+      </ul>
+    </li>
+    <li><b>Avoid Quick Sort When:</b>
+      <ul>
+        <li>Worst-case O(n²) must be avoided (e.g., real-time systems or strict SLAs)</li>
+        <li>Data is already sorted or nearly sorted <b>and</b> pivot choice is naive</li>
+        <li>Stability is required (Quick Sort isn’t stable by default)</li>
+      </ul>
+    </li>
+  </ul>
+</details>
+
+<details>
+  <summary><b>Merge Sort: When to Use & When Not To</b></summary>
+  <ul>
+    <li><b>Use Merge Sort When:</b>
+      <ul>
+        <li>You need stable sorting (important for multi-key sorting)</li>
+        <li>Guaranteed O(n log n) performance is critical (e.g., large datasets)</li>
+        <li>Data needs to be sorted externally (e.g., files too big to fit in memory)</li>
+        <li>Parallel sorting is required (easy to parallelize merge step)</li>
+      </ul>
+    </li>
+    <li><b>Avoid Merge Sort When:</b>
+      <ul>
+        <li>You want an in-place sort (requires O(n) auxiliary space by default)</li>
+        <li>Memory is tight (due to extra space used during merge)</li>
+      </ul>
+    </li>
+  </ul>
+</details>
+
+<p style="margin-top:2em;">Let me know if you'd like this turned into a quick visual cheat sheet or want a comparison table for interview flashbacks! 📋🔥</p>
+Quick sort and Bucket Sort are not stable algorithms, meaning they do not maintain the relative order of equal elements. This can be a crucial factor in certain applications where stability is required, such as sorting records by multiple fields.
+</body>
+</html>
