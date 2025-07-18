@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DFS & BFS Use Cases</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
+    .container { max-width: 900px; margin: 2em auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 2em; }
+    h1, h2, h3 { color: #2c3e50; }
+    table { border-collapse: collapse; width: 100%; margin: 1.5em 0; }
+    th, td { border: 1px solid #bbb; padding: 10px; text-align: left; }
+    th { background: #eaeaea; }
+    ul { margin: 0 0 1em 1.5em; }
+    .section { margin-bottom: 2em; }
+    .highlight { background: #e3f2fd; padding: 0.5em 1em; border-left: 4px solid #2196f3; margin-bottom: 1em; }
+    code, pre { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>DFS Use Cases in Interviews & LeetCode</h1>
+  <p>Depth-First Search (DFS) underpins a huge variety of coding challenges—especially those involving deep exploration, backtracking, or connected-component analysis. Below is a categorized overview of the most common DFS-based problems you’ll encounter in interviews and on LeetCode.</p>
+  <hr>
+  <h2>1. Tree Traversal & Path Problems</h2>
+  <ul>
+    <li><b>Binary Tree Traversals</b>: 94. Inorder, 144. Preorder, 145. Postorder</li>
+    <li><b>Path Sum & Root-to-Leaf Paths</b>: 112. Path Sum, 113. Path Sum II</li>
+    <li><b>Tree Properties</b>: 543. Diameter, 637. Average of Levels, 127. Binary Tree Paths</li>
+  </ul>
+  <h2>2. Backtracking / Combinatorial Search</h2>
+  <ul>
+    <li><b>Subsets & Permutations</b>: 78. Subsets, 90. Subsets II, 46. Permutations, 47. Permutations II</li>
+    <li><b>Combination Sum Family</b>: 39. Combination Sum, 40. Combination Sum II</li>
+    <li><b>Generating Parentheses & Palindromes</b>: 22. Generate Parentheses, 131. Palindrome Partitioning</li>
+    <li><b>N-Queens</b>: 51. N-Queens, 52. N-Queens II</li>
+  </ul>
+  <h2>3. Graph Connectivity & Component Analysis</h2>
+  <ul>
+    <li><b>Count Connected Components</b>: 200. Number of Islands (grid DFS), 323. Number of Connected Components in Undirected Graph, 547. Number of Provinces</li>
+    <li><b>Flood Fill & Region Capture</b>: 130. Surrounded Regions, 733. Flood Fill</li>
+    <li><b>Clone & Traverse Graphs</b>: 133. Clone Graph, 797. All Paths From Source to Target</li>
+  </ul>
+  <h2>4. Cycle Detection & Topological Sort</h2>
+  <ul>
+    <li><b>Graph Cycle Detection</b>: 207. Course Schedule, 261. Graph Valid Tree</li>
+    <li><b>Topological Ordering (via DFS + stack)</b>: 210. Course Schedule II, 269. Alien Dictionary</li>
+  </ul>
+  <h2>5. Maze, Grid Paths & Puzzle Solvers</h2>
+  <ul>
+    <li><b>Word Search</b>: 79. Word Search</li>
+    <li><b>Maze Problems</b>: 490. The Maze, 1303. Find the Shortest Path in a Grid with Obstacles Elimination</li>
+    <li><b>Lock & Key / Combination</b>: 752. Open the Lock (can also use BFS, but DFS for reachability checks)</li>
+  </ul>
+  <hr>
+  <h2>Key DFS Tips for Interviews</h2>
+  <ul>
+    <li>Always maintain a <b>visited</b> structure when exploring graphs/grids to avoid cycles.</li>
+    <li>Use <b>direction arrays</b> (e.g., <code>dx = {1,0,-1,0}</code>, <code>dy = {0,1,0,-1}</code>) for grid neighbors.</li>
+    <li>For <b>backtracking</b>, push a choice, recurse, then pop (undo). This “choose → explore → unchoose” pattern is central to subset/permutation generation.</li>
+    <li>Be mindful of <b>recursion depth</b>—convert to iterative with an explicit stack if necessary.</li>
+    <li>When detecting cycles, use a 3-state color array (unvisited, visiting, visited) for directed graphs.</li>
+  </ul>
+  <div class="highlight">Mastering these DFS patterns will prepare you for a broad swath of interview questions—from simple tree walks to complex graph backtracking. Ready to deep-dive into any particular problem? Let me know!</div>
+  <hr>
+  <h1>Use Cases of Breadth-First Search (BFS)</h1>
+  <p>BFS explores all neighbors of a node before moving deeper. This makes it ideal for problems that require finding the <b>shortest path</b> or <b>level-by-level processing</b> in unweighted graphs and trees.</p>
+  <h2>Primary Applications</h2>
+  <ul>
+    <li>Level-order traversal in trees</li>
+    <li>Shortest path in unweighted graphs or grids</li>
+    <li>Finding connected components and bipartiteness check</li>
+    <li>Flood fill (e.g., fill an area in a 2D grid)</li>
+    <li>Multi-source expansion (e.g., walls-and-gates problem)</li>
+  </ul>
+  <h2>Common Interview/LeetCode Problems</h2>
+  <table>
+    <tr>
+      <th>Category</th>
+      <th>Example LeetCode Problems</th>
+      <th>Key Insight</th>
+    </tr>
+    <tr>
+      <td>Tree Level Order Traversal</td>
+      <td>102. Binary Tree Level Order Traversal</td>
+      <td>Visit nodes level by level</td>
+    </tr>
+    <tr>
+      <td>Zigzag Level Order</td>
+      <td>103. Binary Tree Zigzag Level Order Traversal</td>
+      <td>Alternate direction each level</td>
+    </tr>
+    <tr>
+      <td>Connect Next Right Pointers</td>
+      <td>116. Populating Next Right Pointers in Each Node</td>
+      <td>Link siblings across levels</td>
+    </tr>
+    <tr>
+      <td>Grid Shortest Path</td>
+      <td>01. Number of Islands (flood fill variant)<br>1091. Shortest Path in Binary Matrix</td>
+      <td>BFS to mark visited regions<br>Find minimum steps from top-left to bottom-right</td>
+    </tr>
+    <tr>
+      <td>Word-Ladder-Style Problems</td>
+      <td>127. Word Ladder</td>
+      <td>Each word is a node; edges connect one-letter diff</td>
+    </tr>
+    <tr>
+      <td>Minimum Steps/Escape Problems</td>
+      <td>752. Open the Lock<br>417. Pacific Atlantic Water Flow</td>
+      <td>Graph of combinations; BFS finds fewest moves<br>Multi-source BFS from boundaries</td>
+    </tr>
+  </table>
+  <hr>
+  <h2>Why These Questions?</h2>
+  <ul>
+    <li><b>Level-wise Processing</b>: BFS naturally visits nodes by distance from the root/source, making it simple to group or count by layers.</li>
+    <li><b>Shortest Path Guarantee</b>: In unweighted graphs, BFS returns the minimum number of edges between source and target.</li>
+    <li><b>Visited Tracking</b>: You mark nodes as visited to avoid cycles, a pattern useful in many search and fill problems.</li>
+  </ul>
+  <h2>Tips for BFS in Interviews</h2>
+  <ul>
+    <li>Always maintain a <b>queue</b> and a <b>visited</b> set/array.</li>
+    <li>For level-order tasks, capture the queue size at each iteration to separate levels.</li>
+    <li>In grid problems, use direction arrays (e.g., <code>dx = {1,0,-1,0}</code>, <code>dy = {0,1,0,-1}</code>) to loop neighbors.</li>
+    <li>Consider <b>multi-source BFS</b> when multiple starting points exist.</li>
+    <li>Watch out for memory: on large graphs/grids, ensure you don’t revisit nodes.</li>
+  </ul>
+  <div class="highlight">Want to see a template BFS code snippet in C++ or Python? Let me know and I’ll walk you through it step by step!</div>
+</div>
+</body>
+</html>
