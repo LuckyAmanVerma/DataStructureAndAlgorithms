@@ -28,6 +28,16 @@ Time Complexity : - 0 n , for all cases
 
 */
 
+#include<iostream>
+using namespace std;
+
+struct Node {
+  Node* left;
+  Node* right;
+  int val;
+  Node(int val):val(val),left(nullptr),right(nullptr) {}
+};
+
 void inOrder(Node* root) {
     if (!root) return;
     inOrder(root->left);
