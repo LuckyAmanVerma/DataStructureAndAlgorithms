@@ -11,12 +11,8 @@ Space complexity: O(1) if we ignore the recursion stack
 #include <utility>
 using namespace std;
 
-struct Node{
-    Node* left;
-    Node* right;
-    int val;
-    Node(int val):val(val),left(nullptr),right(nullptr) {}
-};
+
+#include "Node.h"
 
 pair<int,int> preAndSuc(Node* root,int target){
     if(!root) {

@@ -11,12 +11,8 @@ to find the kth smallest element in a Binary Search Tree (BST).
 #include<iostream>
 using namespace std;
 
-struct Node {
-    Node* left;
-    Node* right;
-    int val;
-    Node(int val):val(val),left(nullptr),right(nullptr) {}
-};
+
+#include "Node.h"
 
 int solve(Node* root,int& i,int target){
     if(!root){

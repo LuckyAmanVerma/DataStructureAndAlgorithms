@@ -8,12 +8,8 @@ else return root
 #include<iostream>
 using namespace std;
 
-struct Node{
-    Node* left;
-    Node* right;
-    int val;
-    Node(int val):val(val),left(nullptr),right(nullptr) {}
-};
+
+#include "Node.h"
 
 Node* lowestCommonAncestor(Node* root, Node* p, Node* q) {
         if(!root){

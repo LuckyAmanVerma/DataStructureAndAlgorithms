@@ -10,16 +10,13 @@ Explanation: There are two paths whose sum equals targetSum:
 #include <algorithm>
 using namespace std;
 
-struct TreeNode {
-    int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-};
+
+#include "Node.h"
+using TreeNode = Node;
 
 class Solution {
 public:
-    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+    vector<vector<int>> pathSum(Node* root, int targetSum) {
         vector<vector<int>> result;
         vector<int> path;
         path.reserve(getHeight(root));     // reserve max depth

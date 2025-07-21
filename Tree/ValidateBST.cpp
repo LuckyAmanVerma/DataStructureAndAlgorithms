@@ -11,14 +11,11 @@
  
 using namespace std;
 
-struct TreeNode {
-    TreeNode* left;
-    TreeNode* right;
-    int val;
-    TreeNode(int val):val(val),left(nullptr),right(nullptr) {}
-};
 
-bool validate(TreeNode* node, long min, long max) {
+#include "Node.h"
+using TreeNode = Node;
+
+bool validate(Node* node, long min, long max) {
     if (!node) return true;
 
     if (node->val <= min || node->val >= max)

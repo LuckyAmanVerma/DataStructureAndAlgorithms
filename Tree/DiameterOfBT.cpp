@@ -10,13 +10,8 @@ The diameter of a binary tree is the longest path between any two nodes in the t
 #include<utility>
 using namespace std;
 
-struct Node
-{
-    Node *left;
-    Node *right;
-    int val;
-    Node(int val) : val(val), left(nullptr), right(nullptr) {}
-};
+
+#include "Node.h"
 
 int height(Node* root)
 {

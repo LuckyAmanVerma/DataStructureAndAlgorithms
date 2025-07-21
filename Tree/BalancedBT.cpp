@@ -5,12 +5,8 @@ A Binary Tree is balanced if the height of the two subtrees of any node never di
 #include <iostream>
 #include <algorithm>
 using namespace std;
-struct Node {
-    Node *left;
-    Node *right;
-    int val;
-    Node(int val) : val(val), left(nullptr), right(nullptr) {}
-};
+
+#include "Node.h"
 int height(Node *root) {
     if (!root) {
         return 0;

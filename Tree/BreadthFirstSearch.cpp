@@ -9,22 +9,17 @@ Another Question related to it - Reverse Level Order Traversal
 #include <vector>
 
 using namespace std;
-// Definition for a binary tree node.
-struct TreeNode
-{
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-};
+
+#include "Node.h"
+using Node = Node;
 
 // BFS (Level-Order) Traversal
-void bfs(TreeNode *root)
+void bfs(Node *root)
 {
     if (!root)
         return;
 
-    std::queue<TreeNode *> q;
+    std::queue<Node *> q;
     q.push(root);
 
     int level = 0;

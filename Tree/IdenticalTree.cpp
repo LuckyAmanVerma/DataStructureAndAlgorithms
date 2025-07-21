@@ -1,11 +1,7 @@
 #include<iostream>
 using namespace std;
-struct Node {
-    Node *left;
-    Node *right;
-    int val;
-    Node(int val) : val(val), left(nullptr), right(nullptr) {}
-};
+
+#include "Node.h"
 
 bool identicalTree(Node* root1,Node* root2){
     if(!root1 && !root2){

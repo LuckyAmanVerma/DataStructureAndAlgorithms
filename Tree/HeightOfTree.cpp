@@ -5,13 +5,8 @@ Height of tree is longest path from root to leaf node
 #include <iostream>
 using namespace std;
 
-struct Node
-{
-    Node *left;
-    Node *right;
-    int val;
-    Node(int val) : val(val), left(nullptr), right(nullptr) {}
-};
+
+#include "Node.h"
 
 int height(Node *root)
 {

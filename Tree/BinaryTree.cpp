@@ -18,12 +18,7 @@ Space Complexity for balanced binary trees:
 */
 
 class BinaryTree {
-    struct Node {
-        int data;
-        Node* left;
-        Node* right;
-        Node(int val) : data(val), left(nullptr), right(nullptr) {}
-    };
+    // Node struct moved to Node.h
     Node* root;
 public:
     BinaryTree() : root(nullptr) {}
