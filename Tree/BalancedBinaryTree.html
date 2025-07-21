@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Binary Tree Balance Check</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdfdfd;
+      margin: 40px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    h2 {
+      color: #2c3e50;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .tree-structure {
+      font-family: monospace;
+      background-color: #f0f9ff;
+      padding: 10px;
+      border-left: 4px solid #3498db;
+      margin-bottom: 20px;
+    }
+
+    .node {
+      display: inline-block;
+      padding: 8px 12px;
+      margin: 10px;
+      border-radius: 8px;
+      background-color: #2ecc71;
+      color: white;
+      font-weight: bold;
+    }
+
+    .null-node {
+      background-color: #e74c3c;
+    }
+
+    .step-box {
+      background-color: #f9f9f9;
+      border-left: 4px solid #8e44ad;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 6px;
+    }
+
+    .call-tree {
+      font-family: monospace;
+      background-color: #eef;
+      padding: 8px;
+      border-left: 4px solid #2980b9;
+      margin-top: 20px;
+    }
+
+    .result-bubble {
+      padding: 6px 12px;
+      background-color: #ffeaa7;
+      border-radius: 8px;
+      margin: 5px;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .code-block {
+      background-color: #ecf0f1;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🌳 Binary Tree Structure</h2>
+  <div class="tree-structure">
+    <pre>
+       <span class="node">1</span>
+      /       \
+   <span class="node">10</span>     <span class="node">39</span>
+   /
+<span class="node">5</span>
+    </pre>
+  </div>
+
+  <h2>🔍 Goal: Check if Tree is Balanced</h2>
+  <div class="step-box">
+    A <strong>balanced tree</strong> has all nodes where:<br>
+    → The left and right subtree height difference ≤ 1<br>
+    → Both subtrees are themselves balanced
+  </div>
+
+  <h2>🧠 Recursive Function (Optimized)</h2>
+  <div class="code-block">
+    pair&lt;bool, int&gt; isBalanced(Node* root) {<br>
+      &nbsp;&nbsp;if (!root) return {true, 0}; // balanced, height 0<br><br>
+
+      &nbsp;&nbsp;auto left = isBalanced(root->left);<br>
+      &nbsp;&nbsp;auto right = isBalanced(root->right);<br><br>
+
+      &nbsp;&nbsp;bool subtreeBalanced = left.first &amp;&amp; right.first &amp;&amp;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;abs(left.second - right.second) &lt;= 1;<br><br>
+
+      &nbsp;&nbsp;int height = max(left.second, right.second) + 1;<br>
+      &nbsp;&nbsp;return {subtreeBalanced, height};<br>
+    }
+  </div>
+
+  <h2>🪜 Recursion Stack Trace</h2>
+
+  <div class="step-box">
+    <strong>isBalanced(5)</strong><br>
+    → left = <span class="result-bubble">{true, 0}</span> &nbsp;&nbsp;right = <span class="result-bubble">{true, 0}</span><br>
+    → diff = 0 ≤ 1 ✅ → return <span class="result-bubble">{true, 1}</span>
+  </div>
+
+  <div class="step-box">
+    <strong>isBalanced(10)</strong><br>
+    → left = <span class="result-bubble">{true, 1}</span> &nbsp;&nbsp;right = <span class="result-bubble">{true, 0}</span><br>
+    → diff = 1 ≤ 1 ✅ → return <span class="result-bubble">{true, 2}</span>
+  </div>
+
+  <div class="step-box">
+    <strong>isBalanced(39)</strong><br>
+    → left = <span class="result-bubble">{true, 0}</span> &nbsp;&nbsp;right = <span class="result-bubble">{true, 0}</span><br>
+    → diff = 0 ✅ → return <span class="result-bubble">{true, 1}</span>
+  </div>
+
+  <div class="step-box">
+    <strong>isBalanced(1)</strong><br>
+    → left = <span class="result-bubble">{true, 2}</span> &nbsp;&nbsp;right = <span class="result-bubble">{true, 1}</span><br>
+    → diff = 1 ✅ → return <span class="result-bubble">{true, 3}</span>
+  </div>
+
+  <h2>📥 Recursion Call Tree</h2>
+  <div class="call-tree">
+    isBalanced(1)<br>
+    ├── isBalanced(10)<br>
+    │   └── isBalanced(5)<br>
+    └── isBalanced(39)
+  </div>
+
+  <h2>✅ Final Verdict</h2>
+  <div class="step-box">
+    ✅ Tree is <strong>balanced</strong><br>
+    ✅ Final height = <span class="result-bubble">3</span>
+  </div>
+
+</body>
+</html>

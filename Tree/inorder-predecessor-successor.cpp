@@ -2,10 +2,13 @@
 f you’re writing a function to find predecessor/successor in a BST:
 - Predecessor: rightmost node in left subtree
 - Successor: leftmost node in right subtree
+Time complexity: O(h) where h is the height of the tree
+Space complexity: O(1) if we ignore the recursion stack
 
 */
 
 #include<iostream>
+#include <utility>
 using namespace std;
 
 struct Node{
@@ -15,9 +18,10 @@ struct Node{
     Node(int val):val(val),left(nullptr),right(nullptr) {}
 };
 
-void preAndSuc(Node* root,int target){
+pair<int,int> preAndSuc(Node* root,int target){
     if(!root) {
         cout<<"No data to check"<<endl;
+        return {-1,-1};
     }
 
     Node * temp = root;
@@ -51,6 +55,7 @@ void preAndSuc(Node* root,int target){
     }
 
     cout<<"Predecessor is "<<pred<<" and successor is "<<succ;
+    return {pred,succ};
 }
 
 int main(){

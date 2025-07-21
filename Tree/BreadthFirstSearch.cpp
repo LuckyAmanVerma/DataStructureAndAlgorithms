@@ -1,5 +1,7 @@
 /*
 Read tree from left to right ,
+https://www.youtube.com/watch?v=EoAsWbO7sqg
+Another Question related to it - Reverse Level Order Traversal
 */
 
 #include <iostream>
@@ -65,13 +67,13 @@ vector<vector<int>> BFS(TreeNode *root)
         int qsize = q.size();
         vector<int> level;
         for (int i = 0; i < qsize; i++){
-            TreeNode *node = q.front();
+            TreeNode* node = q.front();
+            level.push_back(node->val);
             q.pop();
             if (node->left)
                 q.push(node->left);
             if (node->right)
                 q.push(node->right);
-            level.push_back(node->val);
         }
         ans.push_back(level);
     }
