@@ -6,7 +6,21 @@ This code implements Kadane's Algorithm to find the maximum subarray sum.
 Time Complexity: O(n)
 Space Complexity: O(1)  
 This algorithm works by iterating through the array and maintaining two variables:
+
+// For arr = [2, 3, -8, 7, -1, 2, 3]:
+// Iteration details:
+// i = 0: max_till_now = 2,  max_overall = 2
+// i = 1: max_till_now = 5,  max_overall = 5
+// i = 2: max_till_now = -3, max_overall = 5
+// i = 3: max_till_now = 7,  max_overall = 7
+// i = 4: max_till_now = 6,  max_overall = 7
+// i = 5: max_till_now = 8,  max_overall = 8
+// i = 6: max_till_now = 11, max_overall = 11
 */
+#include<iostream>
+#include<vector>
+using namespace std;
+
 class Solution {
   public:
     int maxSubarraySum(vector<int> &arr) {  
@@ -21,3 +35,9 @@ class Solution {
         return max_overall; //7
     }
 };
+int main(){
+  Solution s;
+  vector<int> arr = {2, 3, -8, 7, -1, 2, 3};
+  cout << s.maxSubarraySum(arr) << endl;
+  return 0;
+}
