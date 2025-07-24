@@ -35,6 +35,10 @@ int countAnagrams(string s,string p){
            // i want to compare pcount and count map
             if(count==pcount){
                 result++;
+                cout << "Anagram found: ";
+                for(int x = i; x <= j; x++) {
+                    cout << s[x] << " ";
+                }
             }
             // now i want to remove the first character from the map
             count[s[i]]--;
