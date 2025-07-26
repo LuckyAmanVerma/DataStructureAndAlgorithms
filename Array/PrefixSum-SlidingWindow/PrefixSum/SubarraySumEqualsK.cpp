@@ -33,3 +33,7 @@ int SubArraySumEqualsK(vector<int> array,int k) {
     }
     return count;
 }
+
+
+//using sliding window
+Refer longestSubArraySumK in SLiding Window

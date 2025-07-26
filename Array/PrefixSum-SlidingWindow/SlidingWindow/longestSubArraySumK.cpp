@@ -10,7 +10,7 @@ If no such subarray exists, return 0.
 #include<iostream>
 using namespace std;
 
-int longestSubArraySumK(vector<int> array, int k) {
+int longestSubArraySumK(vector<int> array, int k) {cd 
     int n = array.size();
     int i = 0, j = 0, sum = 0, ans = 0;
 
@@ -36,6 +36,6 @@ int longestSubArraySumK(vector<int> array, int k) {
 }
 
 int main(){
-    vector<int> array={2,3,4};
-    cout<<longestSubArraySumK(array,9);
+    vector<int> array={1,1,1};
+    cout<<longestSubArraySumK(array,2);
 }
