@@ -6,6 +6,7 @@ Input: nums = [1,1,1], k = 2
 Output: 2
 Using Brute Force Approach O(n^2)
 Using PrefixSum + Map - O(n)
+https://www.youtube.com/watch?v=KDH4mhFVvHw&t=582s
 
 */
 
