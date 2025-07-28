@@ -22,13 +22,50 @@ mod = (current_sum % k + k) % k
 nums = [4, 5, 0, -2, -3, 1]
 k = 5
 Output:-7
+
+Can 't be solve with sliding window , if it contain positive values , as we also need to backtrack
 */
 
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+
+using namespace std;
+
 int CountSubarraySumDivisibleByK(vector<int> nums,int k) {
+    int asize=nums.size();
     int sum=0;
-    int n=nums.size();
-    int start=0;
-    int end=n;
     int count=0;
-    
+    vector<int> ps(asize,nums[0]);
+    unordered_map<int,int> m;
+
+    for(int i=1;i<asize;i++){ //[4, 5, 0, -2, -3, 1] k=5  ps =[4, 9, 9, 7, 4, 5]
+        ps[i]=ps[i-1]+nums[i];
+    }
+
+    for(int j=0;j<asize;j++) {
+        if(ps[j]%k==0){
+            count+=1;
+        }
+
+        int target = ps[j] % k;
+        if(target < 0) {
+            target += k; // Ensure target is non-negative
+        }
+        if(m.find(target) != m.end()) {
+            count += m[target];
+        }
+
+        m[target]++;
+    }
+
+    return count;
+}
+
+int  main(){
+    vector<int> nums = {4, 5, 0, -2, -3, 1};
+    int k = 5;
+    int result = CountSubarraySumDivisibleByK(nums, k);
+    cout << "Count of subarrays with sum divisible by " << k << " is: " << result << endl;
+    return 0;
 }

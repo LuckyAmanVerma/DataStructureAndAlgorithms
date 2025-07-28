@@ -95,10 +95,10 @@ int WithHashMap(vector<int> array, int k) {
             count = max(count, j - m[val]);
         }
 
-        // record earliest occurrence of this prefix sum
-        if (m.find(prefixSum[j]) == m.end()) {
+        else {
             m[prefixSum[j]] = j;
         }
+
     }
 
     return count;

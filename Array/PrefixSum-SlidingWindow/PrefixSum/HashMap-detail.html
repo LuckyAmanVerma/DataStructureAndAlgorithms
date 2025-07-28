@@ -1,0 +1,77 @@
+# Map Value: Frequency vs. Index – Kaise Choose Karein?  
+
+Prefix-sum + hash-map pattern ke core mein yahi choice hai:  
+- **Frequency** tab chuniye jab aapko _sab_ subarrays ka **count** karna ho.  
+- **Index** tab chuniye jab aapko subarray ki **position** ya **length** optimize karni ho.  
+
+Neeche 5 common problems ke examples diye gaye hain, har ek ke liye bataya hai _kyun_ frequency ya index map use hota hai.  
+
+---
+
+## 1. Count of Subarrays Summing to K  
+**Problem:** Given `nums[]` aur `K`, kitne contiguous subarrays ka sum exactly `K` hai?  
+- **Goal:** Subarray **count** → use **frequency** map.  
+- **Map:** `map[prefixSum] = how many times this sum occurred`  
+- **Logic:**  
+  1. `need = currSum - K`  
+  2. `count += freq[need]` (har pehle hui occurrence ek valid subarray banata hai)  
+  3. `freq[currSum]++`  
+
+---
+
+## 2. Count of Subarrays with Sum Divisible by K  
+**Problem:** Given `nums[]` aur divisor `K`, count karo subarrays jin ka sum `% K == 0`.  
+- **Goal:** Subarray **count** → again **frequency** map.  
+- **Map:** `map[ currSum % K ] = frequency`  
+- **Logic:**  
+  1. Compute `mod = ((currSum % K) + K) % K`  
+  2. `count += freq[mod]` (same remainder repeat → in-between sum divisible)  
+  3. `freq[mod]++`  
+
+---
+
+## 3. Longest Subarray Summing to K  
+**Problem:** Given `nums[]` aur `K`, find the **maximum length** contiguous subarray with sum exactly `K`.  
+- **Goal:** Subarray **length** → use **index** map.  
+- **Map:** `map[prefixSum] = earliest index where this sum appeared`  
+- **Logic:**  
+  1. `need = currSum - K`  
+  2. If `need` in map, `length = i - index[need]`, update `maxLen`  
+  3. If `currSum` first time, `index[currSum] = i`  
+
+---
+
+## 4. Longest Subarray with Sum Divisible by K  
+**Problem:** Given `nums[]` aur `K`, longest contiguous subarray jiska sum `% K == 0`.  
+- **Goal:** Subarray **length** → use **index** map on remainders.  
+- **Map:** `map[ mod ] = earliest index`  
+- **Logic:**  
+  1. `mod = ((currSum % K)+K)%K`  
+  2. If `mod` in map, `length = i - index[mod]`, update `maxLen`  
+  3. Else store `index[mod] = i` (seed `map[0] = -1`)  
+
+---
+
+## 5. Subarrays with Equal Number of 0s and 1s  
+**Problem:** Binary array `nums[]`, find **count** of subarrays jinme 0s aur 1s same number mein ho.  
+- **Goal:** Subarray **count** → **frequency** map.  
+- **Map:** Treat `0 → -1`, `1 → +1`; `map[currSum] = freq`  
+- **Logic:**  
+  1. `need = currSum - 0` (zero net sum)  
+  2. `count += freq[currSum]`  
+  3. `freq[currSum]++`  
+
+---
+
+# Strategy Summary  
+
+1. **Count/Subarrays sabko gino?** → `map<Value, frequency>`  
+2. **Length/Position find karo?** → `map<Value, earliestIndex>`  
+
+“Value” hamesha **prefixSum** (ya uska modified form, jaise `% K` ya bit‐mapping) hota hai.  
+
+Is template ko follow karo, aur har nayi prefix-sum problem me bas  
+- **answer update** aur  
+- **map store**  
+
+mein `count vs max/pos` ki choice karo.

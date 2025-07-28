@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CountSubarraySumDivisibleByK Explanation</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+    code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+    pre  { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow: auto; }
+    h1, h2 { color: #333; }
+    hr { border: none; border-top: 1px solid #ccc; margin: 20px 0; }
+  </style>
+</head>
+<body>
+
+  <h1>CountSubarraySumDivisibleByK([4,5,0,-2,-3,1], 5) — Step-by-Step</h1>
+  <hr>
+
+  <h2>1. Prefix-Sum Array <code>ps</code> Banana</h2>
+  <p>Given the input:</p>
+  <pre><code>nums = [4, 5, 0, −2, −3, 1]</code></pre>
+  <p>Compute the running prefix sums:</p>
+  <pre><code>ps[0] = 4
+ps[1] = 4 + 5  = 9
+ps[2] = 9 + 0  = 9
+ps[3] = 9 + (−2) = 7
+ps[4] = 7 + (−3) = 4
+ps[5] = 4 + 1  = 5</code></pre>
+  <p>Thus:</p>
+  <pre><code>ps = [4, 9, 9, 7, 4, 5]</code></pre>
+  <p><strong>Initial state:</strong> <code>count = 0</code>,  <code>m = {}</code> (empty map)</p>
+
+  <hr>
+
+  <h2>2. Iteration-Wise Trace</h2>
+  <pre><code>j = 0
+- ps[0] = 4
+- 4 % 5 = 4   ⇒ target = 4
+- 4 % 5 ≠ 0   ⇒ no direct count++
+- m before = {}   → m.find(4) FAIL
+- count stays 0
+- m[4]++         → m = {4: 1}
+
+j = 1
+- ps[1] = 9
+- 9 % 5 = 4   ⇒ target = 4
+- no direct count++
+- m before = {4: 1} → count += 1   → count = 1
+- m[4]++         → m = {4: 2}
+
+j = 2
+- ps[2] = 9
+- 9 % 5 = 4   ⇒ target = 4
+- no direct count++
+- m before = {4: 2} → count += 2   → count = 3
+- m[4]++         → m = {4: 3}
+
+j = 3
+- ps[3] = 7
+- 7 % 5 = 2   ⇒ target = 2
+- no direct count++
+- m before = {4: 3} → m.find(2) FAIL
+- count stays 3
+- m[2]++         → m = {4: 3, 2: 1}
+
+j = 4
+- ps[4] = 4
+- 4 % 5 = 4   ⇒ target = 4
+- no direct count++
