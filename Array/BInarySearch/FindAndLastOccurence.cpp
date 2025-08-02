@@ -47,6 +47,7 @@ void firstAndLast(vector<int> array,int k) {
     }
 
     cout<<first<<endl<<last<<endl;
+    cout<<"Total Occurences: "<<last-first+1<<endl;
 }
 
 int main() {
