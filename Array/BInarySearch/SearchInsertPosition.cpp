@@ -11,51 +11,34 @@ Explanation: 7 would be appended at the end, index 4.
 // Time Complexity: O(log n)
 */
 
-int SearchInsertPosition(vector<int> nums,int target) {
-    int left=0;
-    int n=nums.size(); //4
-    int right=n-1; //3
-    int result=0;
-    while(left<=right){ //0<3,2<3 ,3=3
-        int mid=left+(right-left)/2; // 1 ,2 ,3
-        if(nums[mid]==target){   //3==7 false, 5==7 false,6==7 false
-            result =mid;
-            break;
-        }
-        if(left==right){
-            if(nums[right]<target){
-                result =right+1;
-            }
-            break;
-        }
-        if(right-left==1){
-            if(nums[left]<target && nums[right]>target){
-                result=left+1;
-            }
-            break;
-        }
-        if(nums[mid]<target){ //3<7 true,5<7 true
-            left=mid+1; // left =1+1 =2 , 2+1=3
-        }
-        else{
-            right=mid-1;
-        }
-    }
-    return result;
-}
-
+#include <iostream>
+#include <vector>
+using namespace std;
 //optimized one 
 
-int searchInsert(vector<int> nums,int target) {
-    int left = 0, right = nums.size() - 1;
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
+void searchInsert(vector<int> nums,int target) {
+    int start = 0, end = nums.size() - 1;
+    while (start <= end) {
+        int mid = start + (end - start) / 2;
         if (nums[mid] == target)
-            return mid;
+            cout << "Element found at index: " << mid << endl;
         else if (nums[mid] < target)
-            left = mid + 1;
+            start = mid + 1;
         else
-            right = mid - 1;
+            end = mid - 1;
     }
-    return left; 
+    cout<< "Element not found, it can be inserted at index: " << start << endl;
+    cout<<"end "<<end;
+    
+}
+
+int main() {
+    vector<int> nums = {1, 3, 5, 6};
+    int target = 7;
+    searchInsert(nums, target);
+    
+    // target = 7;
+    // searchInsert(nums, target);
+    
+    return 0;
 }
