@@ -32,9 +32,53 @@ int countRotations(const vector<int>& array) {
     return count;
 }
 
+int binarySearch(vector<int> array,int target){
+    int n=array.size();
+    int start=0;
+    int end=n-1;
+    int result=-1;
+    while(start<=end){
+        int mid=start+(end-start)/2;
+        if(array[mid]==target){
+            result=array[mid];
+            cout << "Element found at index: " << mid << endl;
+            break;
+        }
+        if(array[mid]<target){
+            start=mid+1;
+        }
+        else{
+            end=mid-1;
+        }
+
+    }
+    return result;
+}
+
+int findElement(vector<int> array,int target) {
+    int smallest = countRotations(array);
+    int n = array.size();
+    if (smallest == 0) {
+        return binarySearch(array, target);
+    }
+    if (target >= array[0]) {
+        return binarySearch(vector<int>(array.begin(), array.begin() + smallest), target);
+    } else {
+        return binarySearch(vector<int>(array.begin() + smallest, array.end()), target);
+    }
+
+}
+
 int main() {
     vector<int> data = { 4, 5, 1,2,3};
-    int rotations = countRotations(data);
-    cout << "The array is rotated " << rotations << " times." << endl;
+    // int rotations = countRotations(data);
+    // cout << "The array is rotated " << rotations << " times." << endl;
+    int target = 4;
+    int result = findElement(data, target);
+    if (result != -1) {
+        cout << "Element found: " << result << endl;
+    } else {
+        cout << "Element not found." << endl;
+    }
     return 0;
 }
