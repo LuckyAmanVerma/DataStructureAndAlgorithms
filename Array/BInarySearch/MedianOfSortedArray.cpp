@@ -10,43 +10,37 @@ https://www.youtube.com/watch?v=6D9T2ZY8h5c
 
 class Solution {
     public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int A = nums1.size();
-        int B = nums2.size();   
-        if(A==0 and B==0) {
-            return 0.0; // If both arrays are empty, return 0.0
-        }
-        if(A > B) {
-            return findMedianSortedArrays(nums2, nums1); // Ensure nums1 is the smaller array
-        }
-        int left = 0, right = A;
-        int total = A + B;
-        int half = (total + 1) / 2; // Half of the total length (rounded up)
-        while (left <= right) {
-            int i = (left + right) / 2; // Partition index for nums1
-            int j = half - i; // Partition index for nums2
-            int A_left_max =(i==0)?INT_MIN:nums1[i-1]; // Max of left partition of nums1
-            int A_right_min =(i==A)?INT_MAX:nums1[i];
-            int B_left_max =(j==0)?INT_MIN:nums2[j-1]; // Max of left partition of nums2
-            int B_right_min =(j==B)?INT_MAX:nums2[j];
-            if (A_left_max <= B_right_min && B_left_max <= A_right_min) {
-                // Found the correct partition
-                if (total % 2 == 0) {
-                    return (max(A_left_max, B_left_max) + min(A_right_min, B_right_min)) / 2.0; // Even total length
-                } else {
-                    return max(A_left_max, B_left_max); // Odd total length
-                }
+        double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        if(nums1.size() > nums2.size())
+            return findMedianSortedArrays(nums2, nums1);
+        
+        int m = nums1.size();
+        int n = nums2.size();
+        
+        int low = 0, high = m;
+        while(low <= high) {
+            
+            int Px = low + (high-low)/2;
+            int Py = (m+n+1)/2 - Px;
+            
+            int x1  = (Px == 0) ? INT_MIN : nums1[Px-1];
+            int x3 = (Px == m) ? INT_MAX : nums1[Px];
+            
+            int x2  = (Py == 0) ? INT_MIN : nums2[Py-1];
+            int x4 = (Py == n) ? INT_MAX : nums2[Py];
+            
+            if(x1 <= x4 && x2 <= x3) {
+                if((m+n)%2 == 0)
+                    return (max(x1, x2) + min(x3, x4))/2.0;
+                
+                return max(x1, x2);
+            } else if(x1 > x4) {
+                high = Px-1;
+            } else {
+                low = Px+1;
             }
-            else if (A_left_max > B_right_min) {
-                right = i - 1; // Move towards the left in nums1
-            }           
-            else {
-                left = i + 1; // Move towards the right in nums1
-            }
-
         }
-
-        return 0.0; // This line should never be reached if inputs are valid
-
-    }
+        
+        return -1;
+    }   
 }

@@ -28,12 +28,11 @@ double median(vector<int> a1,vector<int> a2) {
         }
         if(a1[i]<=a2[j]){
             i++;
-            k++;
         }
         else {
             j++;
-            k++;
         }
+        k++;
 
     }
 
