@@ -4,15 +4,17 @@ logn , works on sorted array
 */
 #include<iostream>
 #include<vector>
+using namespace std;
 
-int binarySearch(std::vector<int> array,int target){
+int binarySearch(vector<int> array,int target){
     int n=array.size();
     int start=0;
     int end=n-1;
     int result=-1;
-    while(start<=end){
+    while(start<=end){  // for binary sorted array also , same logic work , in that case we will not have to check for the end condition
         int mid=start+(end-start)/2;
         if(array[mid]==target){
+            cout<<"start "<<start<<endl<<"end "<<end<<endl;
             result=array[mid];
             break;
         }
@@ -24,10 +26,16 @@ int binarySearch(std::vector<int> array,int target){
         }
 
     }
+    cout<<"start "<<start<<endl<<"end "<<end<<endl;
     return result;
 }
-using namespace std;
 int main(){
-    vector<int> data={};
+    vector<int> data={1,2,3,4,6,7};
+    int ans = binarySearch(data, 6);
+    if(ans!=-1){
+        cout << "Element found: " << ans << endl;
+    } else {
+        cout << "Element not found" << endl;
+    }
     return 0;
 }
