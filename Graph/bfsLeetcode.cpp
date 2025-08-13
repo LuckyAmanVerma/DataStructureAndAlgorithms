@@ -39,3 +39,31 @@ vector<int> bfsTraversal(int n, const vector<vector<int>> &adj)
 
     return ans;
 }
+
+bool bfsWithCycleCheck(int start,
+                       const vector<vector<int>> &adj,
+                       vector<bool> &visited,
+                       unordered_map<int, int> &parent)
+{
+    queue<int> q;
+    q.push(start);
+    visited[start] = true;
+    parent[start] = -1; // Root node has no parent
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+
+        for (int neigh : adj[node]) {
+            if (!visited[neigh]) {
+                visited[neigh] = true;
+                parent[neigh] = node;
+                q.push(neigh);
+            } else if (parent[node] != neigh) {
+                // Found a visited node that's not parent; cycle detected
+                return true;
+            }
+        }
+    }
+    return false;
+}
