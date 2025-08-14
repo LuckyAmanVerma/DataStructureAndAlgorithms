@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Interview Cheatsheet</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 2em auto; max-width: 720px; }
+        h1 { color: #005093; font-size: 2em; }
+        h2 { color: #046380; margin-top: 2em; }
+        ul { margin-left: 2em; }
+        code, pre { background: #f4f6fa; padding: 2px 5px; font-family: 'Consolas', 'Menlo', monospace; }
+        .pseudo { background: #f7f9fa; border: 1px solid #e3e4e8; padding: 6px 12px; margin: 1em 0; }
+        .section { margin-bottom: 40px; }
+    </style>
+</head>
+<body>
+    <h1>Graph Algorithms: Interview Reference</h1>
+
+    <div class="section">
+        <h2>1. DFS (Depth-First Search)</h2>
+        <ul>
+            <li><strong>Data structure</strong>: Usually <code>stack</code> (explicit or recursion).</li>
+            <li><strong>Usage</strong>: Tree/graph traversal, connectivity, cycles.</li>
+            <li><strong>Undirected cycle check</strong>: Track <code>parent</code>.</li>
+            <li><strong>Directed cycle check</strong>: Track <code>current path</code> (like call stack).</li>
+        </ul>
+        <div class="pseudo">
+            <strong>Pseudocode:</strong>
+            <pre>
+DFS(node, parent):
+    mark visited[node]
+    for neighbor in adj[node]:
+        if not visited[neighbor]:
+            if DFS(neighbor, node): return true
+        else if neighbor != parent: return true
+    return false
+            </pre>
+        </div>
+        <div class="pseudo">
+            <strong>Directed DFS cycle check:</strong>
+            <pre>
+DFS(node):
+    mark visited[node], currentPath[node]
+    for neighbor in adj[node]:
+        if not visited[neighbor]:
+            if DFS(neighbor): return true
+        else if currentPath[neighbor]: return true
+    currentPath[node] = false
+    return false
+            </pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. BFS (Breadth-First Search)</h2>
+        <ul>
+            <li><strong>Data structure</strong>: <code>queue</code>.</li>
+            <li><strong>Usage</strong>: Shortest path (unweighted), level order, cycle detection.</li>
+            <li><strong>Undirected cycle check</strong>: While visiting, if visited neighbor ≠ parent, cycle.</li>
+            <li><strong>Directed cycle check</strong>: Rarely use BFS alone, but track nodes in current queue/visit path.</li>
+        </ul>
+        <div class="pseudo">
+            <strong>Pseudocode:</strong>
+            <pre>
+BFS(start):
+    queue = [(start, -1)]
+    mark visited[start]
+    while queue.notEmpty():
+        node, parent = queue.pop()
+        for neighbor in adj[node]:
+            if not visited[neighbor]:
+                queue.push((neighbor, node))
+                mark visited[neighbor]
+            else if neighbor != parent: return true
+    return false
+            </pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Topological Sort (Directed Acyclic Graph)</h2>
+        <ul>
+            <li><strong>Data structure</strong>: <code>queue</code> (BFS, Kahn's algorithm) OR <code>stack</code> (DFS).</li>
+            <li><strong>Usage</strong>: Ordering tasks, scheduling, dependency resolution.</li>
+            <li><strong>Key point</strong>: Only possible in DAG (no cycles).</li>
+            <li><strong>Cycle detection</strong>: If not all nodes processed (remaining indegree ≠ 0 somewhere), cycle exists.</li>
+        </ul>
+        <div class="pseudo">
+            <strong>Pseudocode (Kahn's algorithm):</strong>
+            <pre>
+TopSort(V, adj):
+    indegree = [0]*V
+    for u in range(V):
+        for v in adj[u]:
+            indegree[v] += 1
+    queue = nodes with indegree==0
+    result = []
+    while queue.notEmpty():
+        node = queue.pop()
+        result.append(node)
+        for neighbor in adj[node]:
+            indegree[neighbor] -=1
+            if indegree[neighbor] == 0:
+                queue.push(neighbor)
+    if len(result) < V: return "Cycle exists"
+    return result
+            </pre>
+        </div>
+        <div class="pseudo">
+            <strong>Pseudocode (DFS):</strong>
+            <pre>
+DFS(node):
+    mark visited[node]
+    for neighbor in adj[node]:
+        if not visited[neighbor]:
+            DFS(neighbor)
+    stack.push(node)
+            </pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Template Notes</h2>
+        <ul>
+            <li>Undirected cycle: Need <code>parent</code> info for each node.</li>
+            <li>Directed cycle: Need <code>currentPath/node-on-stack</code> info.</li>
+            <li><strong>DFS</strong>: Can use recursion OR explicit stack (mimic recursion).</li>
+            <li><strong>BFS</strong>: Use queue; for shortest path, track distance.</li>
+            <li>For all: Use <code>visited</code> array to avoid revisiting nodes.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

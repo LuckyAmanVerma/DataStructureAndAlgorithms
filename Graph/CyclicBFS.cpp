@@ -24,21 +24,19 @@ bool bfsWithCycleCheck(int start,
                        vector<bool> &visited,
                        unordered_map<int, int> &parent)
 {
-    queue<int> q;
-    q.push(start);
+    queue<pair<int,int>> q;  //node,parent
+    q.push({start,-1});
     visited[start] = true;
-    parent[start] = -1; // Root node has no parent
 
     while(!q.empty()) {
-        int front=q.front();
+        auto [node,parent]=q.front();
         q.pop();
-        for(auto neighbour:adj[front]) {
+        for(auto neighbour:adj[node]) {
             if(!visited[neighbour]){
                 visited[neighbour]=true;
-                q.push(neighbour);
-                parent[neighbour]=front;
+                q.push({neighbour,node});
             }
-            else if(parent[front] != neighbour) {
+            else if(neighbour!=parent) {
                 // Found a visited node that's not parent; cycle detected
                 return true;
             }

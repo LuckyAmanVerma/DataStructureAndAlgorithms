@@ -21,6 +21,7 @@ void dfs(int start,
             {
                 visited[neigh] = true;
                 s.push(neigh);
+                // dfs(neigh, visited, adjList, component);
             }
         }
     }

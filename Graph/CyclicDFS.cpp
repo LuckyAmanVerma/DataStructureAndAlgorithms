@@ -21,6 +21,7 @@ bool dfs(int start,
             {
                 visited[neigh] = true;
                 s.push({neigh, node});
+                // dfs(neigh, visited, adjList);
             }
             else if (neigh != parent)
             {
