@@ -1,3 +1,8 @@
+/*
+This is brute force , 
+For Optimal check TopologySortBFS.cpp , 
+*/
+
 #include<iostream>
 #include<vector>
 #include<queue>

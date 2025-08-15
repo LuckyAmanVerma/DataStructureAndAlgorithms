@@ -22,7 +22,7 @@ using namespace std;
 bool bfsWithCycleCheck(int start,
                        const vector<vector<int>> &adj,
                        vector<bool> &visited,
-                       unordered_map<int, int> &parent)
+                       )
 {
     queue<pair<int,int>> q;  //node,parent
     q.push({start,-1});
