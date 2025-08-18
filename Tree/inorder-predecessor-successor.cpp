@@ -5,6 +5,13 @@ f you’re writing a function to find predecessor/successor in a BST:
 Time complexity: O(h) where h is the height of the tree
 Space complexity: O(1) if we ignore the recursion stack
 
+      3
+     / \
+    2   5
+   / \
+  1   4
+
+
 */
 
 #include<iostream>
@@ -34,6 +41,9 @@ pair<int,int> preAndSuc(Node* root,int target){
             temp=temp->right;
         }
     }
+    cout<<"Predecessor is "<<pred<<" and successor is "<<succ<<endl;
+    cout<<"LeftNode is "<<(temp->left ? temp->left->val : -1)<<endl;
+    cout<<"RightNode is "<<(temp->right ? temp->right->val : -1)<<endl;
 
     // now our temp point to target node we calculate pred and succ now
 

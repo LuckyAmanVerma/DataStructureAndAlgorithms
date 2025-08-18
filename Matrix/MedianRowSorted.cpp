@@ -1,6 +1,7 @@
 /*
 https://www.youtube.com/watch?v=Q9wXgdxJq48&t=506s
 Using binary search , we can find the median in a row-wise sorted matrix.
+HERE EVERYTHING REVOLVE AROUND MID , ON THE BASIS OF THAT WE CAN COUNT THE NUMBER OF ELEMENTS SMALLER THAN MID
 */
 #include<iostream>
 #include<vector>

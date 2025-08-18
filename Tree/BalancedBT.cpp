@@ -1,5 +1,11 @@
 /*
 A Binary Tree is balanced if the height of the two subtrees of any node never differs by more than one.
+        1
+       / \
+      2   3
+     / \   \
+    4   5   6
+
 */
 
 #include <iostream>
@@ -27,11 +33,14 @@ bool isBalanced(Node *root) {
     return isBalanced(root->left) && isBalanced(root->right);
 }
 
-pair<bool, int> checkBalanced(Node* root) {
+pair<bool, int> checkBalancedOptimal(Node* root) {
     if (!root) return {true, 0};
 
-    auto left = checkBalanced(root->left);
-    auto right = checkBalanced(root->right);
+    auto left = checkBalancedOptimal(root->left);
+    auto right = checkBalancedOptimal(root->right);
+
+    // cout << "At node " << root->val << ": left height = " << left.second << ", right height = " << right.second << endl<<left.first<<" :"<<right.first;
+    // cout<<endl;
 
     bool balanced = left.first && right.first && 
                     abs(left.second - right.second) <= 1;
@@ -39,4 +48,21 @@ pair<bool, int> checkBalanced(Node* root) {
     int height = max(left.second, right.second) + 1;
 
     return {balanced, height};
+}
+
+int main() {
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
+    root->right->right = new Node(6);
+
+    auto result = checkBalancedOptimal(root);
+    if (result.first) {
+        cout << "The tree is balanced." << endl;
+    } else {
+        cout << "The tree is not balanced." << endl;
+    }
+    return 0;
 }

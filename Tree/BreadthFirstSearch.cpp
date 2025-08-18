@@ -14,6 +14,7 @@ using namespace std;
 using Node = Node;
 
 // BFS (Level-Order) Traversal
+/*
 void bfs(Node *root)
 {
     if (!root)
@@ -46,23 +47,23 @@ void bfs(Node *root)
         level++;
     }
 }
-
+*/
 // Example usage
 
-vector<vector<int>> BFS(TreeNode *root)
+vector<vector<int>> BFS(Node *root)
 {
     vector<vector<int>> ans;
     if (!root){
         return ans;
     }
-    queue<TreeNode *> q;
+    queue<Node*> q;
     q.push(root);
 
     while (!q.empty()){
         int qsize = q.size();
         vector<int> level;
         for (int i = 0; i < qsize; i++){
-            TreeNode* node = q.front();
+            Node* node = q.front();
             level.push_back(node->val);
             q.pop();
             if (node->left)
@@ -77,19 +78,27 @@ vector<vector<int>> BFS(TreeNode *root)
 int main()
 {
     /*Construct a sample tree:
-                      3
+                      1
                      / \
-                    2   5
+                    2   3
                     / \
-                   1   4
+                   4   5
                    */
-    TreeNode *root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->left = new TreeNode(4);
-    root->left->right = new TreeNode(5);
+    Node *root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
 
-    bfs(root);
+    vector<vector<int>> result = BFS(root);
+    for (const auto &level : result)
+    {
+        for (int val : level)
+        {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
 
     // Cleanup (not shown: delete all nodes)
     return 0;
