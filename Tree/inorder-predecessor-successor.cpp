@@ -33,15 +33,14 @@ pair<int,int> preAndSuc(Node* root,int target){
 
     while(temp->val!=target){
         if(temp->val>target){
-            succ = temp->val;
             temp=temp->left;
         }
         else {
-            pred = temp->val;
             temp=temp->right;
         }
     }
     cout<<"Predecessor is "<<pred<<" and successor is "<<succ<<endl;
+    cout<<"current node is "<<temp->val<<endl;
     cout<<"LeftNode is "<<(temp->left ? temp->left->val : -1)<<endl;
     cout<<"RightNode is "<<(temp->right ? temp->right->val : -1)<<endl;
 
@@ -70,5 +69,5 @@ int main(){
     root->right = new Node(5);
     root->left->left = new Node(1);
     root->left->right = new Node(4);
-    preAndSuc(root,3);
+    preAndSuc(root,2);
 }

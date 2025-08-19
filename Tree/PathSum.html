@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursion Tree Walkthrough - targetSum = 10</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      background: #f9fafc;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+    .step {
+      margin-left: 20px;
+      padding: 10px;
+      border-left: 3px solid #aaa;
+    }
+    .subcase {
+      margin-left: 40px;
+      border-left: 2px dotted #bbb;
+      padding-left: 10px;
+    }
+    code {
+      background: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+    }
+    .true {
+      color: green;
+      font-weight: bold;
+    }
+    .false {
+      color: red;
+      font-weight: bold;
+    }
+    .combine {
+      margin: 8px 0;
+      padding: 5px 10px;
+      background: #f1f1f1;
+      border-radius: 5px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Recursion Tree Walkthrough (targetSum = 10)</h1>
+
+  <div class="step">
+    <strong>Step 1: Root = 5</strong><br>
+    Not a leaf.<br>
+    Subtract value: <code>targetSum = 10 - 5 = 5</code>.<br>
+    Recurse into <b>left (4)</b> and <b>right (8)</b>.
+  </div>
+
+  <div class="step">
+    <strong>Step 2A: Left Child = 4</strong><br>
+    Not a leaf.<br>
+    Subtract: <code>5 - 4 = 1</code>.<br>
+    Recurse:
+    <div class="subcase">
+      <b>Subcase 2A.1: Node = 11, targetSum = 1</b><br>
+      Not a leaf.<br>
+      Subtract: <code>1 - 11 = -10</code>.<br>
+      Recurse:
+
+      <div class="subcase">
+        <b>Subcase 2A.1.1: Node = 7, targetSum = -10</b><br>
+        Leaf.<br>
+        Check: <code>-10 == 7 ?</code> → <span class="false">false ❌</span><br>
+        Return <span class="false">false</span>.
+      </div>
+
+      <div class="subcase">
+        <b>Subcase 2A.1.2: Node = 2, targetSum = -10</b><br>
+        Leaf.<br>
+        Check: <code>-10 == 2 ?</code> → <span class="false">false ❌</span><br>
+        Return <span class="false">false</span>.
+      </div>
+
+      <div class="combine">
+        👉 Combine: <code>pathSum(11,1) = false OR false = false</code>
+      </div>
+    </div>
+
+    <div class="subcase">
+      <b>Subcase 2A.2: Null child</b><br>
+      <code>pathSum(nullptr,1) → false</code>.
+    </div>
+
+    <div class="combine">
+      👉 Combine for Node 4: <code>pathSum(4,5) = false OR false = false</code>
+    </div>
+  </div>
+
+  <div class="step">
+    <strong>Step 2B: Right Child = 8</strong><br>
+    Subtract: <code>5 - 8 = -3</code>.<br>
+    Recurse:
+    <div class="subcase">
+      <b>Subcase 2B.1: Node = 13, targetSum = -3</b><br>
+      Leaf.<br>
+      Check: <code>-3 == 13 ?</code> → <span class="false">false ❌</span><br>
+      Return <span class="false">false</span>.
+    </div>
+
+    <div class="subcase">
+      <b>Subcase 2B.2: Node = 4, targetSum = -3</b><br>
+      Not a leaf.<br>
+      Subtract: <code>-3 - 4 = -7</code>.<br>
+      Recurse:
+      <div class="subcase">
+        <b>Subcase 2B.2.1: Null child</b> → <span class="false">false</span>
+      </div>
+      <div class="subcase">
+        <b>Subcase 2B.2.2: Node = 1, targetSum = -7</b><br>
+        Leaf.<br>
+        Check: <code>-7 == 1 ?</code> → <span class="false">false ❌</span><br>
+        Return <span class="false">false</span>.
+      </div>
+
+      <div class="combine">
+        👉 Combine: <code>false OR false = false</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <strong>Step 3: Combine Results at Root (5)</strong><br>
+    <code>pathSum(4,5) OR pathSum(8,5) = false OR false = false</code>
+  </div>
+
+  <h2 style="color:red;text-align:center;">
+    ❌ Final Result: No path with sum 10 exists.
+  </h2>
+
+</body>
+</html>
