@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rule of Thumb: Dijkstra vs Topological Sort</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121831;
+      --ink: #eaf0ff;
+      --muted: #a9b3cf;
+      --accent: #6ea8fe;
+      --accent-2: #a78bfa;
+      --border: #233055;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Top Navigation */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 1rem;
+      padding: .75rem 1rem; border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(10,14,30,.9), rgba(10,14,30,.75));
+      backdrop-filter: blur(8px);
+    }
+    .brand { font-weight: 800; letter-spacing: .3px; }
+    .spacer { flex: 1; }
+    .nav a { padding: .5rem .75rem; border-radius: .6rem; }
+    .nav a:hover { background: rgba(255,255,255,.06); text-decoration: none; }
+
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; padding: 1.2rem; }
+    .hero {
+      padding: 2.2rem 0 1.5rem; display: grid; gap: .6rem;
+    }
+    .kicker { color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; }
+    h1 { margin: 0; font-size: clamp(1.6rem, 2.8vw, 2.4rem); line-height: 1.15; }
+    .subtitle { color: var(--muted); max-width: 68ch; }
+
+    /* Cards */
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
+    .card {
+      grid-column: span 12;
+      background: linear-gradient(180deg, rgba(31,44,86,.35), rgba(18,24,49,.85));
+      border: 1px solid var(--border); border-radius: 16px; padding: 1rem; 
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .card h2 { margin-top: .2rem; }
+    @media (min-width: 900px) {
+      .span-6 { grid-column: span 6; }
+      .span-4 { grid-column: span 4; }
+    }
+
+    .badge { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; padding: .2rem .5rem; border-radius: .6rem; border: 1px solid var(--border); color: var(--muted); }
+    .list { margin: .6rem 0 0; padding-left: 1.1rem; }
+    .list li { margin: .35rem 0; }
+
+    .pill {
+      display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border-radius:999px; border:1px solid var(--border); color:var(--muted); font-size:.85rem; margin:.25rem .25rem 0 0; 
+    }
+    .good { border-color: rgba(34,197,94,.3); }
+    .warn { border-color: rgba(245,158,11,.35); }
+
+    .footer { color: var(--muted); text-align: center; padding: 2rem 0 3rem; }
+    .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: rgba(255,255,255,.06); padding: .15rem .4rem; border-radius: .4rem; }
+
+    /* Anchor offset for sticky nav */
+    .anchor { position: relative; top: -68px; visibility: hidden; }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <nav class="nav">
+    <div class="brand">Rule of Thumb — Dijkstra Algo</div>
+    <div class="spacer"></div>
+    <a href="#overview">Overview</a>
+    <a href="#dijkstra">Dijkstra</a>
+    <a href="#toposort">Topological Sort</a>
+    <a href="#rule">Rule of Thumb</a>
+  </nav>
+
+  <main class="container">
+    <section class="hero" id="overview">
+      <span class="kicker">Shortest Path Cheatsheet</span>
+      <h1>Choosing between <span class="code">Dijkstra</span> and <span class="code">Topological Sort</span></h1>
+      <p class="subtitle">A quick reference for single-source shortest path. Includes when to use Dijkstra (non-negative weights, general graphs) versus Topological Sort (DAGs, works with negative weights if no cycles).</p>
+      <div>
+        <span class="pill good">Undirected Unweighted → BFS (with parent)</span>
+        <span class="pill">Directed/Undirected + non-negative weights → Dijkstra</span>
+        <span class="pill warn">Any negative edge weights → Bellman–Ford</span>
+        <span class="pill">All-pairs → Floyd–Warshall / Johnson</span>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- Dijkstra Card -->
+      <section class="card span-6" id="dijkstra">
+        <span class="anchor" id="anchor-dijkstra"></span>
+        <div class="badge">When to use</div>
+        <h2>Dijkstra’s Algorithm</h2>
+        <ul class="list">
+          <li><strong>Graph type:</strong> Directed or undirected (general graphs).</li>
+          <li><strong>Edge weights:</strong> <em>Non‑negative only</em>.</li>
+          <li><strong>Cycles:</strong> Allowed (no negative cycles permitted).</li>
+          <li><strong>Time:</strong> <span class="code">O((V + E) log V)</span> with a min‑heap.</li>
+        </ul>
+        <p><strong>Typical uses:</strong> GPS/road routing, network latency minimization, flight/time/cost optimization where negatives don’t occur.</p>
+      </section>
+
+      <!-- Topological Sort Card -->
+      <section class="card span-6" id="toposort">
+        <span class="anchor" id="anchor-toposort"></span>
+        <div class="badge">When to use</div>
+        <h2>Topological Sort (DAG Shortest Path)</h2>
+        <ul class="list">
+          <li><strong>Graph type:</strong> <em>DAG only</em> (Directed Acyclic Graph).</li>
+          <li><strong>Edge weights:</strong> Works with positive or negative (no cycles).</li>
+          <li><strong>Cycles:</strong> Not allowed (acyclic by definition).</li>
+          <li><strong>Time:</strong> <span class="code">O(V + E)</span> (often faster than Dijkstra).</li>
+        </ul>
+        <p><strong>Typical uses:</strong> Project scheduling (CPM/PERT), compiler instruction scheduling, data pipelines, dependency resolution.</p>
+      </section>
+
+      <!-- Rule of Thumb Card -->
+      <section class="card" id="rule">
+        <span class="anchor" id="anchor-rule"></span>
+        <div class="badge">Quick guide</div>
+        <h2>Rule of Thumb</h2>
+        <ul class="list">
+          <li>If the graph is a <strong>DAG</strong> → prefer <strong>Topological Sort</strong> (linear time, handles negative weights).</li>
+          <li>If the graph has <strong>cycles</strong> but weights are <strong>non‑negative</strong> → use <strong>Dijkstra</strong>.</li>
+          <li>If <strong>any negative weights</strong> are present (unknown structure) → use <strong>Bellman–Ford</strong>.</li>
+          <li>Need <strong>all‑pairs shortest paths</strong> → try <strong>Floyd–Warshall</strong> or <strong>Johnson’s</strong> (if sparse).</li>
+        </ul>
+        <p><em>Bonus:</em> For <strong>undirected, unweighted</strong> shortest paths, use <strong>BFS with a parent array</strong> to reconstruct the path.</p>
+      </section>
+
+      <!-- Extra: BFS Parent Note -->
+      <section class="card span-4">
+        <div class="badge">Note</div>
+        <h3>Shortest Path (Undirected, Unweighted)</h3>
+        <p>Use <strong>BFS</strong> with a <strong>parent</strong> array to reconstruct the path from the destination back to the source.</p>
+      </section>
+      <section class="card span-4">
+        <div class="badge">Complexity</div>
+        <h3>At a glance</h3>
+        <ul class="list">
+          <li>BFS: <span class="code">O(V + E)</span></li>
+          <li>Topological (DAG): <span class="code">O(V + E)</span></li>
+          <li>Dijkstra (heap): <span class="code">O((V + E) \log V)</span></li>
+          <li>Bellman–Ford: <span class="code">O(VE)</span></li>
+          <li>Floyd–Warshall: <span class="code">O(V^3)</span></li>
+        </ul>
+      </section>
+      <section class="card span-4">
+        <div class="badge">Tip</div>
+        <h3>Implementation hint</h3>
+        <p>For Dijkstra, prefer a <strong>min‑heap/priority queue</strong>. For DAG shortest path, make sure you <strong>topologically sort</strong> first, then relax edges in that order.</p>
+      </section>
+    </div>
+
+    <footer class="footer">
+      Built for quick recall — “Rule of Thumb: Dijkstra vs Topological Sort”.
+    </footer>
+  </main>
+</body>
+</html>

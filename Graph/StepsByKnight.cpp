@@ -22,7 +22,7 @@ int minStepsByKnight(int N, int start_x, int start_y, int target_x, int target_y
     q.push({start_x, start_y, 0});
     visited[start_x][start_y] = true;
 
-    std::vector<std::pair<int, int>> moves = generateKnightMoves();
+    vector<pair<int, int>> moves = generateKnightMoves();
 
     while (!q.empty()) {
         Position curr = q.front();
