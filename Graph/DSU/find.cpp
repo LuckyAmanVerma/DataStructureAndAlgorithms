@@ -36,6 +36,7 @@ void union(int x,int y,vector<int> &parent,vector<int> &rank) {
     }
 }
 
+
 int main() {
     vector<int> parent(100);
     vector<int> rank(100,0);
