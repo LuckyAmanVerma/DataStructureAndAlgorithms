@@ -1,5 +1,6 @@
 /*
 Using DFS to find unreachable nodes
+Main Formula:- size*(remainingNodes-size);
 */
 
 #include<iostream>

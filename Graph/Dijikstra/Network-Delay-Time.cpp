@@ -8,6 +8,8 @@ Output: 2
 Explanation:
 Node 1 takes 1, Node 3 takes 1, Node 4 takes 2. Maximum = 2.
 Time Complexity: O((E + V) log V), where E is the number of edges and V is the number of vertices.
+
+SHORTEST_PATH_DIRECTED_GRAPH
 */
 
 #include <iostream>
@@ -31,7 +33,7 @@ int main() {
     int n = 4, src = 2;
     vector<vector<pair<int,int>>> adj(n);
     createAdjacencyList(adj,edges,n);
-    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq; // weight,node
     vector<int> distance(n,INT_MAX);
     //initialzation
     distance[src-1]=0;
