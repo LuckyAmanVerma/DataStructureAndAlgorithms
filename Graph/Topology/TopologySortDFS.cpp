@@ -1,5 +1,10 @@
 /*
 Problem: Given a directed acyclic graph (DAG), perform a topological sort using depth-first search (DFS).
+
+
+Also refer- Cycle in direct graph using dfs  2.
+
+Jb saare neighbors visit ho jaye , tabhi vo stack me push hoga.
 */
 
 #include<bits/stdc++.h>

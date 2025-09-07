@@ -5,27 +5,36 @@ push indegree 0 ites to queue ,
 Then start performing bfs , and update the indegree of neighbours
 Definition of Topology:- Topological sorting is a linear ordering of vertices in a directed acyclic graph (DAG) 
 such that for every directed edge (u, v), vertex u comes before vertex v in the ordering.
+
+Course Schedule 2 Problem:
+Given a list of courses and their prerequisites, determine if it's possible to finish all courses.
+Input:
+n=6
+prereqs=[[2,0],[2,1],[3,2],[4,2],[5,3]]
+# one valid output: [0,1,2,4,3,5]
 */
 #include<bits/stdc++.h>
 using namespace std;
 
 int main() {
-    int V=5;
+    int V=6;
+    vector<pair<int, int>> edges = {
+        {2,0},
+        {2,1},
+        {3,2},
+        {4,2},
+        {5,3}
+    };
     vector<vector<int>> adj(V);
-    adj[0] = {1, 2};
-    adj[1] = {3};
-    adj[2] = {3, 4};
-    adj[3] = {};
-    adj[4] = {};
+    vector<int> indegree(V, 0);
+    for (auto [u, v] : edges) {
+        adj[u].push_back(v);
+        indegree[v]++;
+    }
 
-    vector<int> indegree(V);
     queue<int> q;
     vector<int> ans;
-    for(int i=0;i<adj.size();i++) {
-        for(int j=0;j<adj[i].size();j++) {
-            indegree[adj[i][j]]++;
-        }
-    }
+    
 
     for(int i=0;i<indegree.size();i++) {
         if(indegree[i]==0) {

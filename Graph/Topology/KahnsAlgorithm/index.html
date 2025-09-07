@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kahn’s Algorithm (BFS Topological Sort)</title>
+  <style>
+    body{font-family: Inter, Roboto, Arial; max-width:900px;margin:24px auto;padding:20px;color:#0b1220;line-height:1.5}
+    h1{font-size:28px}
+    h2{font-size:20px;margin-top:28px}
+    pre{background:#f6f8fa;padding:12px;border-radius:8px;overflow:auto}
+    .card{border-radius:10px;padding:14px;margin:12px 0;background:#fff;box-shadow:0 6px 18px rgba(15,23,42,0.04)}
+    .meta{font-size:13px;color:#374151}
+    code{background:#eef2ff;padding:2px 6px;border-radius:4px}
+    .flow{background:#fff7ed;border-left:4px solid #f59e0b;padding:10px;border-radius:6px}
+    .ascii{font-family:monospace;background:#0f1724;color:#e6eef8;padding:10px;border-radius:6px}
+    .hint{background:#ecfeff;border-left:4px solid #06b6d4;padding:10px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Kahn’s Algorithm (BFS-based Topological Sort)</h1>
+  <p class="meta">An intuitive BFS-based algorithm to generate topological ordering of a Directed Acyclic Graph (DAG). It also detects cycles easily using indegree counting.</p>
+
+  <section class="card">
+    <h2>Steps of Kahn’s Algorithm</h2>
+    <div class="flow">
+      <ol>
+        <li>Calculate indegree of all nodes (incoming edges count).</li>
+        <li>Push all nodes with indegree = 0 into a queue.</li>
+        <li>Pop a node from queue → add it to topo order.</li>
+        <li>For each neighbor, reduce indegree by 1. If indegree becomes 0 → push to queue.</li>
+        <li>Repeat until queue is empty.</li>
+      </ol>
+    </div>
+    <p><strong>Cycle check:</strong> If topo order contains all nodes → no cycle. Otherwise, cycle exists.</p>
+  </section>
+
+  <section class="card">
+    <h2>Example 1: Simple DAG</h2>
+    <pre>n = 4
+edges = [[0,1],[0,2],[1,3],[2,3]]
+
+Topo order possible: [0,1,2,3] or [0,2,1,3]
+</pre>
+
+    <p class="ascii">
+    Graph:
+        0
+       / \
+      v   v
+      1   2
+       \ /
+        v
+        3
+    </p>
+
+    <p class="meta">Process: start with node 0 (indegree=0). Remove edges → nodes 1 and 2 become indegree 0. Then process them, finally node 3.</p>
+  </section>
+
+  <section class="card">
+    <h2>Example 2: Detect Cycle</h2>
+    <pre>n=2
+edges=[[0,1],[1,0]]
+# Here cycle exists, no valid topo order.
+</pre>
+    <p class="ascii">
+    Graph:
+    0 ---> 1
+    ^      |
+    |      v
+    +------+
+    </p>
+
+    <p class="meta">Both nodes have indegree 1. Queue starts empty → topo order remains empty → cycle detected.</p>
+  </section>
+
+  <section class="card">
+    <h2>Use Cases of Kahn’s Algorithm</h2>
+    <ul>
+      <li><strong>Topological ordering</strong>: Course scheduling, dependency resolution.</li>
+      <li><strong>Cycle detection</strong>: If all nodes not processed → cycle present.</li>
+      <li><strong>Job scheduling with dependencies</strong>: e.g. job prerequisites.</li>
+      <li><strong>Build systems</strong>: Makefile, compilers, package installers (npm, apt-get).</li>
+      <li><strong>Event scheduling</strong>: Tasks with dependencies.</li>
+      <li><strong>LeetCode 207 (Course Schedule I)</strong>: detect if all courses finishable.</li>
+      <li><strong>LeetCode 210 (Course Schedule II)</strong>: return one valid order of courses.</li>
+      <li><strong>LeetCode 269 (Alien Dictionary)</strong>: deduce order of alien alphabets.</li>
+      <li><strong>Minimum Time to Finish All Jobs</strong>: BFS level order with job times.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>DFS vs Kahn’s Algorithm</h2>
+    <ul>
+      <li><strong>DFS-based Topo Sort</strong>: uses recursion + stack, requires <code>recStack</code> or color array for cycle detection.</li>
+      <li><strong>Kahn’s Algorithm</strong>: iterative BFS, uses indegree, cycle detection is implicit (if not all nodes processed).</li>
+      <li>In interviews, both are expected. Kahn’s is more intuitive for dependency problems (Course Schedule, Alien Dictionary).</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Complexity</h2>
+    <p><strong>Time:</strong> O(V + E) (each node and edge processed once)<br>
+    <strong>Space:</strong> O(V + E) (adjacency list + indegree + queue + output)</p>
+  </section>
+
+  <section class="card">
+    <h2>C++ Implementation</h2>
+    <pre>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+vector<int> kahnTopo(int n, vector<vector<int>>& edges){
+    vector<vector<int>> adj(n);
+    vector<int> indeg(n);
+    for(auto &e: edges){
+        adj[e[0]].push_back(e[1]);
+        indeg[e[1]]++;
+    }
+    queue<int> q;
+    for(int i=0;i&lt;n;i++) if(indeg[i]==0) q.push(i);
+
+    vector<int> ans;
+    while(!q.empty()){
+        int u=q.front(); q.pop();
+        ans.push_back(u);
+        for(int v: adj[u]){
+            if(--indeg[v]==0) q.push(v);
+        }
+    }
+    return ans.size()==n ? ans : vector<int>(); // empty if cycle
+}
+    </pre>
+  </section>
+
+  <footer style="margin-top:20px;color:#475569;font-size:13px">Generated: Kahn’s Algorithm BFS Topological Sort — with steps, examples, use cases, and code.</footer>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Topological Sort — Problems & Solutions</title>
+  <style>
+    body{font-family: Inter, Roboto, Arial; max-width:900px;margin:24px auto;padding:20px;color:#0b1220;line-height:1.5}
+    h1{font-size:28px}
+    h2{font-size:20px;margin-top:28px}
+    pre{background:#f6f8fa;padding:12px;border-radius:8px;overflow:auto}
+    .card{border-radius:10px;padding:14px;margin:12px 0;background:#fff;box-shadow:0 6px 18px rgba(15,23,42,0.04)}
+    .meta{font-size:13px;color:#374151}
+    code{background:#eef2ff;padding:2px 6px;border-radius:4px}
+    .flow{background:#fff7ed;border-left:4px solid #f59e0b;padding:10px;border-radius:6px}
+    .ascii{font-family:monospace;background:#0f1724;color:#e6eef8;padding:10px;border-radius:6px}
+    .hint{background:#ecfeff;border-left:4px solid #06b6d4;padding:10px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Topological Sort — Problems, Examples & Flows</h1>
+  <p class="meta">Aman — Collection of interview-style problems around Topological Sort (DFS + stack & Kahn's algorithm). Each problem contains: description, input/output, time/space complexity, ASCII graph example, and the solution flow.</p>
+
+  <!-- 1 -->
+  <section class="card">
+    <h2>1. Find Topological Order of a DAG (Base)</h2>
+    <p><strong>Problem:</strong> Given a directed acyclic graph (DAG), return any valid topological ordering of its vertices.</p>
+
+    <p><strong>Input format (example):</strong></p>
+    <pre>n = 6
+edges = [[5,2],[5,0],[4,0],[4,1],[2,3],[3,1]]
+# nodes labeled 0..5</pre>
+
+    <p><strong>Expected Output (one valid):</strong></p>
+    <pre>[5,4,2,3,1,0]</pre>
+
+    <p class="meta"><strong>Why this works</strong>: topological order lists nodes so every directed edge u-&gt;v appears before v.</p>
+
+    <div class="flow">
+      <strong>Flow (Kahn / BFS):</strong>
+      <ol>
+        <li>Compute in-degree of every node.</li>
+        <li>Push nodes with in-degree 0 into a queue.</li>
+        <li>Pop queue → append to answer → for each neighbor decrease in-degree; if becomes 0 push neighbor.</li>
+        <li>If answer size == n → valid topo order. Otherwise cycle.</li>
+      </ol>
+    </div>
+
+    <p class="meta"><strong>Complexity:</strong> Time O(n + m), Space O(n + m) (adjacency + indegree + queue + output)</p>
+
+    <p><strong>ASCII graph (example):</strong></p>
+    <pre class="ascii">
+      5 ---> 2 ---> 3 ---> 1
+      |                ^
+      v                |
+      0                |
+
+      4 --> 0
+      |
+      v
+      1
+    </pre>
+
+    <p><strong>Key hints:</strong></p>
+    <ul>
+      <li>Use vector<int> indeg(n), queue<int> q.</li>
+      <li>Variants: return lexicographically smallest topo by using min-heap instead of queue.</li>
+    </ul>
+
+    <pre><strong>C++ (Kahn):</strong>
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+vector<int> topoSort(int n, vector<vector<int>>& edges){
+    vector<vector<int>> adj(n);
+    vector<int> indeg(n); 
+    for(auto &e: edges){ adj[e[0]].push_back(e[1]); indeg[e[1]]++; }
+    queue<int> q; for(int i=0;i<n;i++) if(indeg[i]==0) q.push(i);
+    vector<int> ans; while(!q.empty()){ int u=q.front(); q.pop(); ans.push_back(u);
+        for(int v: adj[u]) if(--indeg[v]==0) q.push(v);
+    }
+    return ans.size()==n?ans:vector<int>();
+}
+</pre>
+  </section>
+
+  <!-- 2 -->
+  <section class="card">
+    <h2>2. Cycle Detection using Topo Sort (Course Schedule I)</h2>
+    <p><strong>Problem:</strong> Given n courses (0..n-1) and prerequisites as pairs [a,b] meaning you must take b before a, determine whether you can finish all courses.</p>
+
+    <pre>n = 4
+prereqs = [[1,0],[2,1],[3,2]]
+# returns true (no cycle)
+
+n = 2
+prereqs = [[1,0],[0,1]]
+# returns false (cycle)
+</pre>
+
+    <div class="flow">
+      <strong>Flow:</strong>
+      <ol>
+        <li>Run Kahn's algorithm (compute topo order).</li>
+        <li>If produced order length == n → no cycle → possible.</li>
+        <li>Else cycle exists → impossible.</li>
+      </ol>
+    </div>
+
+    <p class="meta">Complexity: O(n + m) time, O(n + m) space.</p>
+
+    <pre class="ascii">
+    Example with cycle:
+
+    0 ---> 1
+    ^      |
+    |      v
+    3 <--- 2
+    (If there's a cycle, Kahn will not visit all nodes)
+    </pre>
+
+    <p class="hint">Pro tip: You can also detect cycles using DFS state array: 0=unvisited,1=visiting,2=visited — if you hit a 'visiting' node again → cycle.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="card">
+    <h2>3. Course Schedule II (Return Order)</h2>
+    <p><strong>Problem:</strong> Return a possible ordering of courses to finish all courses (LeetCode 210).</p>
+    <pre>n=6
+prereqs=[[2,0],[2,1],[3,2],[4,2],[5,3]]
+# one valid output: [0,1,2,4,3,5]
+</pre>
+    <div class="flow">
+      <ol>
+        <li>Either use Kahn to get order directly (BFS).</li>
+        <li>Or use DFS postorder: run DFS and push to stack after visiting all neighbors; reverse stack = topo order.</li>
+      </ol>
+    </div>
+    <p class="meta">DFS variant complexity: O(n+m) time. Space O(n+m) for recursion + output.</p>
+    <pre><strong>C++ (DFS):</strong>
+void dfs(int u, vector<vector<int>>& adj, vector<int>& vis, vector<int>& stk, bool &cycle){
+    vis[u]=1; // visiting
+    for(int v: adj[u]){
+        if(vis[v]==0) dfs(v, adj, vis, stk, cycle);
+        else if(vis[v]==1){ cycle=true; return; }
+    }
+    vis[u]=2; stk.push_back(u);
+}
+</pre>
+  </section>
+
+  <!-- 4 -->
+  <section class="card">
+    <h2>4. Longest Path in a DAG</h2>
+    <p><strong>Problem:</strong> Given a weighted DAG, find the length of the longest path from a source node (or all-pairs longest if required). This is solvable with topo + DP.</p>
+
+    <pre>n=5
+edges=[ [0,1,3],[0,2,2],[1,2,1],[1,3,4],[2,3,2],[3,4,1] ]
+# longest path from 0 to 4 = 0->1->3->4 = 3+4+1 = 8
+</pre>
+
+    <div class="flow">
+      <ol>
+        <li>Topologically sort the graph.</li>
+        <li>Initialize dist[] = -inf; dist[source]=0 (or 0 for all nodes if want max among all).</li>
+        <li>Process nodes in topo order: for each outgoing edge u->v with weight w: if dist[v] &lt; dist[u]+w then update dist[v].</li>
+      </ol>
+    </div>
+
+    <p class="meta">Complexity: O(n + m). Space: O(n + m).</p>
+
+    <pre class="ascii">
+    Topo order example: [0,1,2,3,4]
+    Relax edges in that order to get longest distances.
+    </pre>
+
+    <p class="hint">Important: Negative cycles can't exist in a DAG. If graph may have cycles, this approach is invalid.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="card">
+    <h2>5. Alien Dictionary (LeetCode 269)</h2>
+    <p><strong>Problem:</strong> Given a sorted list of words in an alien language, deduce a valid order of the characters.</p>
+
+    <pre>words = ["wrt","wrf","er","ett","rftt"]
+# output: "wertf"
+</pre>
+
+    <div class="flow">
+      <ol>
+        <li>Build graph over characters: compare adjacent words, find first differing character pair (c1,c2) and add edge c1-&gt;c2.</li>
+        <li>Also add all characters as nodes (even if no edges).</li>
+        <li>Run topological sort; if cycle => invalid.
+      </ol>
+    </div>
+
+    <p class="meta">Complexity: O(sum of lengths of words + alphabet) time and space.</p>
+    <pre class="ascii">
+    Example edges from sample: w->e, e->r, r->t, t->f
+    Topo order: w e r t f
+    </pre>
+
+    <p class="hint">Edge cases: prefix situation where longer word appears before its prefix (e.g., "abc","ab") → invalid.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="card">
+    <h2>6. Parallel Courses (Minimum Semesters) — LeetCode 1136</h2>
+    <p><strong>Problem:</strong> Given n courses and prerequisites, find minimum number of semesters needed if you can take any number of courses per semester provided prerequisites satisfied.</p>
+
+    <pre>n=3
+prereqs=[[1,0],[2,1]]
+# semesters = 3 (0 -> 1 -> 2)
+</pre>
+
+    <div class="flow">
+      <ol>
+        <li>Perform BFS Kahn but track level (semester) for nodes popped that had indegree 0 at that round.</li>
+        <li>Each BFS layer = one semester; increment semester after finishing layer.</li>
+      </ol>
+    </div>
+
+    <p class="meta">Complexity: O(n + m).</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="card">
+    <h2>7. Build System / Package Installer Order</h2>
+    <p><strong>Problem:</strong> Given packages and their dependencies, find install order. Detect cycles and report error. (Same as topo sort.)</p>
+
+    <pre>
+packages = [A,B,C,D]
+deps = {B:[A], C:[B], D:[A,C]}
+# valid order: A,B,C,D
+</pre>
+
+    <div class="flow">
+      <ol>
+        <li>Map package names to integer ids.</li>
+        <li>Build graph, run topo (Kahn) to get install order.
+        </li>
+      </ol>
+    </div>
+
+    <p class="hint">Use hashtable for mapping names &amp; keep adjacency list for ints.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="card">
+    <h2>8. Minimum Time to Finish All Jobs (Jobs with processing times)</h2>
+    <p><strong>Problem:</strong> Each job has prerequisites and a processing time. Find minimum time to finish all jobs assuming unlimited parallel machines but respecting prerequisites.</p>
+
+    <pre>
+jobs = {0:3, 1:2, 2:4}
+prereqs = [[1,0],[2,0]]
+# job0 finishes at t=3, then job1 finishes at t=3+2=5, job2 at t=3+4=7 -> answer 7
+</pre>
+
+    <div class="flow">
+      <ol>
+        <li>Topologically order nodes.</li>
+        <li>dp[u] = time to finish u (including prerequisites). For node u, dp[u] = time[u] + max(dp[p] for p in preds(u)).</li>
+        <li>answer = max(dp[u]) over all u.</li>
+      </ol>
+    </div>
+
+    <p class="meta">Complexity: O(n + m).</p>
+  </section>
+
+  <!-- Closing -->
+  <section class="card">
+    <h2>Extras & Tips</h2>
+    <ul>
+      <li>When asked to "give topo order" clarify whether multiple orders allowed; many graphs have multiple valid orders.</li>
+      <li>To produce deterministic order in interviews, use a min-heap to pick smallest available node (or process nodes in sorted adjacency order).</li>
+      <li>For ASCII graphs in interviews, draw small examples (4–7 nodes) showing edges and walk through Kahn queue or DFS stack manually — this demonstrates clear thinking.</li>
+      <li>Key tradeoffs: DFS uses recursion (watch stack overflow) but is concise; Kahn (BFS) is iterative and directly detects cycles by comparing output size to n.</li>
+    </ul>
+  </section>
+
+  <footer style="margin-top:20px;color:#475569;font-size:13px">Generated: Topo sort focused cheatsheet — ready to copy as HTML for notes or interview prep.</footer>
+</body>
+</html>
