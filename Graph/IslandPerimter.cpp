@@ -21,30 +21,31 @@ While traversing check if it is -1 , then it is already visited no need to visit
 
 using namespace std;
 
-void dfs(vector<vector<int>> &grid,int i,int j,int &peri) {
+void dfs(vector<vector<int>> &grid,int i,int j,int &peri,vector<vector<bool>> &visited) {
     if(i<0 || i>=grid.size() || j<0||j>=grid[0].size() ||grid[i][j]==0) {
         peri++;
         return;
     }
-    if(grid[i][j]==-1) {
+    if(visited[i][j]) {
         return;
     }
-    grid[i][j]=-1; //mark visited
-    dfs(grid,i+1,j,peri);
-    dfs(grid,i-1,j,peri);
-    dfs(grid,i,j+1,peri);
-    dfs(grid,i,j-1,peri);
+    visited[i][j]=true; //mark visited
+    dfs(grid,i+1,j,peri,visited);
+    dfs(grid,i-1,j,peri,visited);
+    dfs(grid,i,j+1,peri,visited);
+    dfs(grid,i,j-1,peri,visited);
 
 }
 
-int islandPerimter(vector<vector<int>> &grid) {
+int islandPerimeter(vector<vector<int>> &grid) {
     int rows = grid.size();
     int cols = grid[0].size();
     int peri =0;
+    vector<vector<bool>> visited(rows,vector<bool>(cols,false));
     for(int i=0;i<rows;i++) {
         for(int j=0;j<cols;j++) {
             if(grid[i][j]==1) {
-                dfs(grid,i,j,peri);
+                dfs(grid,i,j,peri,visited);
                 return peri;
             }
         }
@@ -61,7 +62,7 @@ int main() {
         {1,1,0,0}
     };
 
-    int perimeter = islandPerimter(grid);
+    int perimeter = islandPerimeter(grid);
     cout << "Island Perimeter: " << perimeter << endl;
 
     return 0;
