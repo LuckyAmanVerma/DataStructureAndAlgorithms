@@ -21,7 +21,7 @@ int find(int i,vector<int> &parent) {
     return parent[i]=find(parent[i],parent);
 }
 
-void union(int x,int y,vector<int> &parent,vector<int> &rank) {
+void Union(int x,int y,vector<int> &parent,vector<int> &rank) {
     int x_parent=find(x,parent);
     int y_parent=find(y,parent);
     if(x_parent!=y_parent) {
