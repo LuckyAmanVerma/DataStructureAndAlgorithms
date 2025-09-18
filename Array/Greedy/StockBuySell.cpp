@@ -1,6 +1,7 @@
 /*
 Input: arr[] = [100, 180, 260, 310, 40, 535, 695]
 Output: 865
+Explanation: Buy at 100, sell at 310, buy at 40 and sell at 695
 */
 
 #include <iostream>

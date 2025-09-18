@@ -3,6 +3,8 @@ Two Sum pairs equal to 0
 Input: arr = [-1, 0, 1, 2, -1, -4]
 Output: [[-1, 1]]
 
+Sorted  =[-4,-1,-1,0,1,2]
+
 Time Complexity: O(n log n) for sorting + O(n) for the two-pointer search = O(n log n)
 */
 
