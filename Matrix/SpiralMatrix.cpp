@@ -6,6 +6,12 @@ Input:
   [ 7, 8, 9 ] ]
 
 Output: 1 2 3 6 9 8 7 4 5
+Remember , 
+After every direction change , we need to update the boundary i.e constant 
+1.direction left ->right , top constant 
+2. direction top -> bottom , right constant
+3. direction right -> left , bottom constant
+4. direction bottom -> top , left constant 
 */
 
 #include<iostream>

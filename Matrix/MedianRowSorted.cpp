@@ -2,6 +2,8 @@
 https://www.youtube.com/watch?v=Q9wXgdxJq48&t=506s
 Using binary search , we can find the median in a row-wise sorted matrix.
 HERE EVERYTHING REVOLVE AROUND MID , ON THE BASIS OF THAT WE CAN COUNT THE NUMBER OF ELEMENTS SMALLER THAN MID
+First the starting element and ending element , then we can find the mid of that range.
+Then we can count the number of elements smaller than mid in the matrix.
 */
 #include<iostream>
 #include<vector>
@@ -28,7 +30,7 @@ int findMedian(vector<vector<int>> &matrix) {
         int mid = start + (end - start)/2;
         int cnt = countData(matrix, mid);
         if (cnt < desired) start = mid + 1;
-        else end = mid;
+        else end = mid; // possibly mid will be the answer , so we do not do mid-1
     }
     return start;
 }

@@ -7,6 +7,7 @@ Output: 2
 Explanation: Row 2 contains the most number of 1s (4 1s). Hence, the output is 2.
 
 METHOD IS CALLED staircase”  OR TOP_RIGHT APPROACH
+Time Complexity: O(m + n) where m is the number of rows and n is the number of columns in the matrix.
 */
 
 #include<iostream>
@@ -15,7 +16,7 @@ METHOD IS CALLED staircase”  OR TOP_RIGHT APPROACH
 
 using namespace std;
 
-int bruteForce(vector<vector<int>> &arr) {
+int bruteForce(vector<vector<int>> &arr) { 
         int row = arr.size();
         int col = arr[0].size();
         
@@ -37,7 +38,7 @@ int bruteForce(vector<vector<int>> &arr) {
         return ans;
     }
 
-int rowWithMaxOnesOptimized(const vector<vector<int>> &matrix) {
+int rowWithMaxOnesOptimized(const vector<vector<int>> &matrix) { // time complexity O(m+n)
     int r = matrix.size();
     int c = matrix[0].size();
 
