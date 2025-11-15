@@ -1,0 +1,250 @@
+# Writing an HTML file that documents knapsack variations and template changes.
+html = r"""
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Knapsack DP Template Variations</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.5; padding: 20px; max-width: 1100px; margin: auto; }
+    h1,h2,h3 { color: #1b263b; }
+    pre { background:#f4f6f8; padding:12px; border-radius:6px; overflow:auto; }
+    code { font-family: monospace; }
+    .note { background:#fffbe6; padding:8px; border-left:4px solid #ffd966; margin:10px 0; }
+    .example { border:1px solid #e1e5ea; padding:10px; border-radius:6px; margin:10px 0; background:#fbfdff;}
+  </style>
+</head>
+<body>
+  <h1>Knapsack & Dynamic Programming Template Variations</h1>
+  <p>Author: ChatGPT — A single-page cheat-sheet listing common knapsack problems, their DP recurrences, and the small template changes you must make in your base template (the one you gave for an <strong>unbounded</strong> knapsack).</p>
+
+  <h2>Legend / quick notes</h2>
+  <ul>
+    <li><code>W</code> — capacity.</li>
+    <li><code>n</code> — number of items/types.</li>
+    <li><code>weights[i]</code>, <code>values[i]</code> — weight and value of item i.</li>
+    <li>Two main DP styles: <strong>2D</strong> <code>dp[i][w]</code> (index items) and <strong>1D</strong> <code>dp[w]</code> (space-optimized by capacity).</li>
+    <li>Two core differences between kinds:
+      <ul>
+        <li><strong>0/1 knapsack</strong>: each item used at most once.</li>
+        <li><strong>unbounded/complete knapsack</strong>: items can be used unlimited times.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>1. Your base: <em>Complete / Unbounded Knapsack (2D)</em></h2>
+  <p>Your template (slightly cleaned):</p>
+  <pre><code>// Unbounded (complete) knapsack - 2D DP
+int knapsack_unbounded(const vector<int>& wt, const vector<int>& val, int W, int n) {
+  vector<vector<int>> dp(n+1, vector<int>(W+1, 0));
+  for (int i = 1; i <= n; ++i) {
+    for (int w = 1; w <= W; ++w) {
+      if (wt[i-1] <= w) {
+        // Use item i-1 any number of times -> dp[i][w - wt[i-1]] (stay on same i)
+        dp[i][w] = max(val[i-1] + dp[i][w - wt[i-1]], dp[i-1][w]);
+      } else {
+        dp[i][w] = dp[i-1][w];
+      }
+    }
+  }
+  return dp[n][W];
+}</code></pre>
+
+  <div class="note"><strong>Why <code>dp[i][w - wt]</code> (not <code>dp[i-1]</code>)?</strong> Because when you pick item i-1 in an unbounded problem you can pick it again — so you allow transitions from the same item row <code>i</code>.</div>
+
+  <h2>2. 0/1 Knapsack (bounded: each item at most once)</h2>
+  <p>Change the recurrence: when you pick item i-1, you must come from <code>i-1</code> (cannot reuse the same item).</p>
+  <pre><code>// 0/1 knapsack - 2D DP
+dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i-1][w - wt[i-1]]);
+// In code:
+if (wt[i-1] <= w) dp[i][w] = max(val[i-1] + dp[i-1][w - wt[i-1]], dp[i-1][w]);
+else dp[i][w] = dp[i-1][w];</code></pre>
+
+  <p><strong>1D optimization</strong> (common pattern): iterate capacity from high to low.</p>
+  <pre><code>// 0/1 knapsack - 1D DP
+vector<int> dp(W+1, 0);
+for (int i = 0; i < n; ++i) {
+  for (int w = W; w >= wt[i]; --w) {
+    dp[w] = max(dp[w], dp[w - wt[i]] + val[i]);
+  }
+}</code></pre>
+
+  <h2>3. Unbounded (1D) — space optimized</h2>
+  <pre><code>// Unbounded knapsack - 1D DP (capacity ascending)
+vector<int> dp(W+1, 0);
+for (int i = 0; i < n; ++i) {
+  for (int w = wt[i]; w <= W; ++w) {           // ascending -> allow reuse
+    dp[w] = max(dp[w], dp[w - wt[i]] + val[i]);
+  }
+}</code></pre>
+
+  <div class="note">Important: for unbounded 1D, iterate <strong>w ascending</strong>; for 0/1 1D, iterate <strong>w descending</strong>.</div>
+
+  <h2>4. Bounded knapsack (each item has limited count)</h2>
+  <p>Three standard ways:</p>
+  <ol>
+    <li><strong>Simple loop</strong> — if counts small: repeat item count times and treat as separate 0/1 items (costly).</li>
+    <li><strong>Binary splitting / binary decomposition</strong> — convert count into powers of two (efficient).</li>
+    <li><strong>Use DP with inner loops (O(nW·count))</strong> — sometimes OK.</li>
+  </ol>
+  <pre><code>// Example: binary splitting (1D dp)
+for each item i with count c:
+  int k = 1;
+  while (c > 0) {
+    int take = min(k, c);
+    // item of weight = wt[i]*take, value = val[i]*take, single 0/1 item now
+    for (int w = W; w >= wt[i]*take; --w)
+      dp[w] = max(dp[w], dp[w - wt[i]*take] + val[i]*take);
+    c -= take;
+    k <<= 1;
+  }</code></pre>
+
+  <h2>5. Counting ways vs maximizing value (use <code>+</code> vs <code>max</code> vs <code>||</code>)</h2>
+  <ul>
+    <li><strong>Maximization problems</strong> (typical knapsack): use <code>max()</code>.</li>
+    <li><strong>Counting solutions</strong> (how many ways to achieve weight W): use <code>dp[w] += dp[w - wt]</code> and initialize <code>dp[0]=1</code>. Order of loops matters (unbounded: w ascending).</li>
+    <li><strong>Feasibility / subset-sum (boolean)</strong>: use logical OR: <code>dp[i][w] = dp[i-1][w] || dp[i-1][w-wt]</code> or 1D with descending order.</li>
+    <li><strong>Minimization</strong> (min coins to make W): use <code>min()</code> and initialize with INF.</li>
+  </ul>
+  <pre><code>// Counting ways (unbounded coin-change style, 1D)
+vector<long long> dp(W+1, 0);
+dp[0] = 1;
+for (int i = 0; i < n; ++i)
+  for (int w = wt[i]; w <= W; ++w)
+    dp[w] += dp[w - wt[i]];   // addition, not max
+
+// Feasibility (subset-sum) - boolean
+vector<char> dp(W+1, 0);
+dp[0] = 1;
+for (int i = 0; i < n; ++i)
+  for (int w = W; w >= wt[i]; --w)
+    dp[w] = dp[w] || dp[w - wt[i]];</code></pre>
+
+  <h2>6. Value-based DP (optimize by value instead of weight)</h2>
+  <p>Use when sum(values) is smaller than W. Typical for "min weight to achieve at least value V".</p>
+  <pre><code>// dp[v] = minimum weight to achieve value v
+const int INF = 1e9;
+int Vsum = accumulate(val.begin(), val.end(), 0);
+vector<int> dpV(Vsum+1, INF);
+dpV[0] = 0;
+for (int i = 0; i < n; ++i)
+  for (int v = Vsum; v >= val[i]; --v)
+    dpV[v] = min(dpV[v], dpV[v - val[i]] + wt[i]);</code></pre>
+
+  <h2>7. Reconstructing chosen items</h2>
+  <p>Keep a parent pointer or boolean chosen table. For 2D dp it's straightforward — backtrack from <code>dp[n][W]</code>. For 1D dp, keep extra array <code>take[i][w]</code> or store previous weight index.</p>
+
+  <h2>8. Group knapsack (choose at most one item from a group)</h2>
+  <pre><code>// For group g (items j in group)
+for (int w = W; w >= 0; --w) {
+  int best = dp[w]; // not picking any from this group
+  for (item j in group) if (w >= wt[j]) best = max(best, dp[w - wt[j]] + val[j]);
+  new_dp[w] = best;
+}
+dp = new_dp; // replace</code></pre>
+
+  <h2>9. Multi-dimensional / multi-constraint knapsack</h2>
+  <p>When items have two costs (e.g., weight and volume) you need dp with extra dimension <code>dp[w][v]</code> or compress appropriately. Complexity increases multiplicatively.</p>
+
+  <h2>10. Monotonic queue optimization / optimization tricks</h2>
+  <p>Used to speed up bounded/unbounded knapsack transitions to O(nW) with small constant or improved complexity for large counts. Usually applied to the recurrence that resembles a sliding window. Search for "Monotonic queue optimization knapsack" when needed.</p>
+
+  <h2>11. Quick table: which operator / loop order to use</h2>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>Problem</th><th>DP type</th><th>Operator</th><th>1D loop order</th><th>Notes</th></tr>
+    <tr><td>0/1 knapsack</td><td>max</td><td><code>max()</code></td><td>descending</td><td>dp[w] = max(dp[w], dp[w-wt]+val)</td></tr>
+    <tr><td>Unbounded / complete</td><td>max</td><td><code>max()</code></td><td>ascending</td><td>dp[w] = max(dp[w], dp[w-wt]+val)</td></tr>
+    <tr><td>Counting ways (order-sensitive)</td><td>sum</td><td><code>+=</code></td><td>ascending</td><td>dp[0]=1, dp[w]+=dp[w-wt]</td></tr>
+    <tr><td>Subset-sum (feasible)</td><td>boolean</td><td><code>||</code></td><td>descending</td><td>dp[w] = dp[w] || dp[w-wt]</td></tr>
+    <tr><td>Minimization (min coins)</td><td>min</td><td><code>min()</code></td><td>ascending (unbounded) or descending (0/1)</td><td>init INF</td></tr>
+  </table>
+
+  <h2>12. Explanation for "sometimes + in if condition, something ||, sometimes max"</h2>
+  <p>You're seeing these because different problem statements ask different questions:</p>
+  <ul>
+    <li><strong>Do you need the best value? -></strong> use <code>max()</code>.</li>
+    <li><strong>Do you need whether a weight is reachable? -></strong> use logical <code>||</code> (or booleans).</li>
+    <li><strong>Do you need number of ways? -></strong> use <code>+</code> (accumulate counts).</li>
+    <li><strong>Do you need minimum number of items / weight? -></strong> use <code>min()</code> and INF initialization.</li>
+  </ul>
+
+  <h2>13. Complete set of small template changes from your original snippet</h2>
+  <ol>
+    <li><strong>For 0/1 (2D):</strong> change <code>dp[i][w - wt[i-1]]</code> to <code>dp[i-1][w - wt[i-1]]</code>.</li>
+    <li><strong>For boolean feasibility:</strong> replace <code>= max(...)</code> with <code>= dp[i-1][w] || dp[i-1][w-wt]</code> (or 1D variant with <code>||</code> and descending w).</li>
+    <li><strong>For counting ways:</strong> use numeric type (long long), initialize <code>dp[0]=1</code>, and use <code>+=</code> in transitions.</li>
+    <li><strong>For bounded (count c):</strong> binary-split counts into powers of two and treat as multiple 0/1 items (or use monotonic queue).</li>
+    <li><strong>For minimization:</strong> initialize dp to INF and use <code>min()</code> transitions.</li>
+    <li><strong>Loop orders:</strong> when using 1D always pick loop order to reflect reuse semantics: ascending -> reuse allowed, descending -> no reuse.</li>
+  </ol>
+
+  <h2>14. Short annotated checklist for converting your template</h2>
+  <ul>
+    <li>Do you want multiple uses of the same item? —&gt; unbounded: use <code>dp[i][w - wt]</code> (or 1D ascending).</li>
+    <li>At most once? —&gt; 0/1: use <code>dp[i-1][...]</code> and 1D descending.</li>
+    <li>Counting vs maximizing? —&gt; replace <code>max</code> with <code>+</code> or <code>||</code> as required.</li>
+    <li>Bounded with large counts? —&gt; binary-split or monotonic queue.</li>
+  </ul>
+
+  <h2>15. Small collection of example problem names to map to templates</h2>
+  <ul>
+    <li>Classic 0/1 knapsack — 0/1 template.</li>
+    <li>Unbounded knapsack / coin change (max value) — unbounded template.</li>
+    <li>Coin change (count ways) — counting template.</li>
+    <li>Subset sum / partition — boolean template.</li>
+    <li>Bounded knapsack (limited copies) — binary-split template.</li>
+    <li>Group knapsack — group template.</li>
+    <li>Min coins to make amount — minimization template.</li>
+    <li>Knapsack with two constraints — multi-dimensional template.</li>
+  </ul>
+
+  <h2>16. Ready-to-use C++ snippets (copy-paste friendly)</h2>
+  <h3>0/1 (2D)</h3>
+  <pre><code>for (int i = 1; i <= n; ++i)
+  for (int w = 0; w <= W; ++w) {
+    dp[i][w] = dp[i-1][w];
+    if (w >= wt[i-1])
+      dp[i][w] = max(dp[i][w], val[i-1] + dp[i-1][w - wt[i-1]]);
+  }</code></pre>
+
+  <h3>Unbounded (2D)</h3>
+  <pre><code>for (int i = 1; i <= n; ++i)
+  for (int w = 0; w <= W; ++w) {
+    dp[i][w] = dp[i-1][w];
+    if (w >= wt[i-1])
+      dp[i][w] = max(dp[i][w], val[i-1] + dp[i][w - wt[i-1]]);
+  }</code></pre>
+
+  <h3>Counting ways (unbounded) - 1D</h3>
+  <pre><code>vector<long long> dp(W+1);
+dp[0] = 1;
+for (int i = 0; i < n; ++i)
+  for (int w = wt[i]; w <= W; ++w)
+    dp[w] += dp[w - wt[i]];</code></pre>
+
+  <h2>17. References / keywords to search (if you want more)</h2>
+  <ul>
+    <li>"Complete knapsack", "0/1 knapsack", "bounded knapsack", "binary splitting knapsack"</li>
+    <li>"Knapsack monotonic queue optimization"</li>
+    <li>"Value-based knapsack dp"</li>
+    <li>"Group knapsack"</li>
+  </ul>
+
+  <hr>
+  <p>If you'd like, I can also:</p>
+  <ul>
+    <li>Generate separate HTML pages per variant (0/1, unbounded, bounded, counting, boolean).</li>
+    <li>Include worked examples and backtracking code for each variant.</li>
+    <li>Create printable PDF or a small cheatsheet card.</li>
+  </ul>
+
+  <p style="font-size:0.9em; color:#444;">Generated on request.</p>
+</body>
+</html>
+"""
+
+path = "/mnt/data/knapsack_templates.html"
+with open(path, "w", encoding="utf-8") as f:
+    f.write(html)
+
+print(f"Wrote HTML to: {path}")
