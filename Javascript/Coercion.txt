@@ -1,0 +1,17 @@
+JavaScript ka Golden Rule 🧠
+
+👉 + operator:
+
+Agar koi ek operand string hai → string concatenation
+
+👉 Baaki operators (- * /):
+
+JS numbers banane ki koshish karta hai
+
+const debouncing =(fn,timer)=>{
+    let timeout;
+    return (...args)=>{
+        clearTimeout(timeout);
+        timeout = setTimeout(()=>fn(...args),timer);
+    }
+}
